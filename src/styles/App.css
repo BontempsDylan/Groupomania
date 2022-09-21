@@ -1,0 +1,17 @@
+.header {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
+.header__logo {
+  height: 100%;
+}
+
+img {
+  height: 130px;
+}
+
+
