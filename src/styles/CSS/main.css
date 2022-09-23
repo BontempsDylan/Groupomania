@@ -1,0 +1,38 @@
+.header {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.header__logo {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.header__bloc {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0px;
+}
+.header__bloc__connection {
+  padding-right: 10px;
+}
+.header__bloc__inscription {
+  padding-left: 10px;
+}
+.header__bloc p {
+  color: #FD2D01;
+  margin: 0px;
+  cursor: pointer;
+}
+.header__bloc p:hover {
+  border-bottom: 2px solid #0065FC;
+}
+
+img {
+  width: 120px;
+}
+
+/*# sourceMappingURL=main.css.map */
