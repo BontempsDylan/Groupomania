@@ -1,15 +1,14 @@
-import Banner from './Banner'
 import PostList from './PostList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 function App() {
   return (
-    
-    <div>
-      <Banner></Banner>  
-      <PostList></PostList>
-    </div>
-    
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PostList/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -39,6 +39,7 @@ router.post(
             return true;
         }
     }),
+    body('email').isEmail(),
     finalValidation,
     userCtrl.signup
 );

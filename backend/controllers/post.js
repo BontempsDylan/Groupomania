@@ -10,16 +10,24 @@ require('dotenv').config();
  */
 
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    const post = new Post({
-      ...postObject,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    });
-    
-    post.save()
+    const postObject = req.body;
+    if (req.file == undefined) {
+      const post = new Post({
+        ...postObject,
+      });
+      post.save()
       .then(() => { res.status(201).json({ post })})
       .catch(error => { res.status(400).json({ error })});
-    
+    } else {
+      const post = new Post({
+        ...postObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        
+      });
+      post.save()
+      .then(() => { res.status(201).json({ post })})
+      .catch(error => { res.status(400).json({ error })});
+    }
 };
 
 /*
@@ -47,15 +55,19 @@ exports.modifyPost = (req, res, next) => {
  */
 
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id})
-      .then(post => {
-          const filename = post.imageUrl.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({_id: req.params.id})
-              .then(() => { res.status(200).json({message: 'Objet supprimé !'})})
-              .catch(error => res.status(401).json({ error }));
-          });
-        })     
+  Post.findOne({ _id: req.params.id})
+    .then(post => {
+      if (post === null) {
+        return res.status(404).json({ message: "Ce poste n'éxiste pas." })
+      } else {
+        const filename = post.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+          Post.deleteOne({_id: req.params.id})
+            .then(() => { res.status(200).json({message: 'Objet supprimé !'})})
+            .catch(error => res.status(401).json({ error }));
+        });
+      }      
+    })     
 }
 
 /*
@@ -64,8 +76,18 @@ exports.deletePost = (req, res, next) => {
 
 exports.getOnePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
-      .then((post) => res.status(200).json(post))
-      .catch(error => res.status(404).json({ error }));
+    .then((post) =>{
+      if (post === null) {
+        return res.status(404).json({ message: "Ce poste n'éxiste pas." })
+      } else {
+        Post.findOne({ _id: req.params.id })
+          .then((post) => res.status(200).json(post))
+          .catch(error => res.status(404).json({ error }));
+      }
+    })
+      
+    
+      
 }
 
 /*
@@ -125,6 +147,6 @@ exports.likePost = (req, res, next) => {
         });        
       break;
     default:
-      console.error("not today : mauvaise requête");
+      return res.status(404).json({ message: "Mauvaise requete."});
   }
 };

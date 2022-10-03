@@ -12,23 +12,7 @@ const router = express.Router();
 const post = require('../controllers/post');
 
 // costum multer to handle errors.
-const customMulter = (req, res, next) => {
-    multer(req, res, function(err) {
-        if (req.body.image === '') {
-            res.status(400).json({
-                message: "no file included, file is required here"
-            });
-            return;
-        }
-        else if (err) {
-            res.status(400).json({
-                message: "bad request, check your input file"
-            });
-            return;
-        }
-        next();
-    }) 
-};
+
 
 /*
 * Objectif => define a router and middleware for the differente requete's methodes.
@@ -37,9 +21,9 @@ const customMulter = (req, res, next) => {
 router.post(
     '/',
     auth, 
-    customMulter,
+    multer,
     (req, res, next) => {
-        req.body = JSON.parse(req.body.sauce);
+        req.body = JSON.parse(req.body.post);
         next();
     },
     body('publication')
@@ -49,7 +33,21 @@ router.post(
     finalValidation,
     post.createPost
     );
-router.put('/:id', auth, customMulter, post.modifyPost);
+router.put(
+    '/:id', 
+    auth, 
+    multer, 
+    (req, res, next) => {
+        req.body = JSON.parse(req.body.post);
+        next();
+    },
+    body('publication')
+        .isLength({ min: 2, max: 300 })
+        .withMessage("Le nom doit contenir min 2 caractères et maximum 300 caractères")
+        .escape(),
+    finalValidation, 
+    post.modifyPost
+    );
 router.delete('/:id', auth, post.deletePost)
 router.get('/:id', auth, post.getOnePost);
 router.get('/', auth, post.getAllPost);

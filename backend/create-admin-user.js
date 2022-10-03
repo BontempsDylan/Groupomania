@@ -6,12 +6,10 @@ const User = require('./models/User');
 
 const createAdminUser = async () => {
     try {
-        // TODO create environment variables related to admin account
         const hash = await bcrypt.hash(process.env.PASSWORD_ADMIN_USER, 10);
         const user = new User({
             email: process.env.EMAIL_ADMIN_USER,
             password: hash,
-            // TODO create the `isAdmin` field in the user model (with false as a default)
             isAdmin: true
         });
         await user.save();
