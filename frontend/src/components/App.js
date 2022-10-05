@@ -1,12 +1,14 @@
-import PostList from './PostList';
+import BannerPostList from './BannerPostlist';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Formulaire from './Formulaire';
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PostList/>} />
+        <Route path="/" element={<BannerPostList/>} />
+        <Route path="/Formulaire" element={<Formulaire/>}/>
       </Routes>
     </BrowserRouter>
   );

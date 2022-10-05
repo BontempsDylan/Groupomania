@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
 
-const MOCK_POSTS = [
+/* const MOCK_POSTS = [
   {
     id: "1234",
     publication: "ceci est un post",
@@ -19,14 +19,14 @@ const MOCK_POSTS = [
     imageUrl: "https://picsum.photos/id/237/200/300",
     likes: 77
   }
-];
+]; */
 
 function PostList() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setposts] = useState([]);
   
-    /**
+    
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -47,11 +47,11 @@ function PostList() {
             }
           )
       }, [])
-     */
+     
   
-      // ! how to manipulate mock data if backend not ready
+      /* // ! how to manipulate mock data if backend not ready
       useEffect(() => {
-        fetch("https://www.google.com")
+        fetch("http://localhost:3000/api/posts")
           .then(() => {
               setposts(MOCK_POSTS);
             },
@@ -63,7 +63,7 @@ function PostList() {
               setError(error);
             }
           )
-      }, [])
+      }, []) */
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -71,6 +71,7 @@ function PostList() {
       return <div>Loading...</div>;
     } else {
       return (
+        
         <ul className="blocCart">
           {posts.map(post => (
             <li className="blocCart__cart" key={post.id}>

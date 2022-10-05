@@ -14,16 +14,28 @@
     &__bloc {
         display: flex;
         justify-content: center;
+        
         width: 100%;
         height: 30px;
         margin: 0px;
         &__connection {
             padding-right: 10px;
+            text-decoration: none;
         }
         &__inscription {
             padding-left: 10px;
+            text-decoration: none;
         }
-        & p {
+        & link {
+            text-decoration: none;
+            color: #FD2D01;
+            margin: 0px;
+            cursor: pointer;
+        }
+        & li {
+            text-decoration: none;
+            list-style: none;
+            text-decoration: none;
             color: #FD2D01;
             margin: 0px;
             cursor: pointer;
