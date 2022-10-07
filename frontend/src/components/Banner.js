@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/icon-left-font.png';
+import logo from '../assets/icon-left-font-monochrome-black.png';
 import '../styles/CSS/main.css';
 
 // const isLoggedIn = true;

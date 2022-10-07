@@ -11,7 +11,7 @@ html, body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background: #FFD7D7;
+  background: white;
 }
 
 * {
@@ -47,7 +47,7 @@ html, body {
   font-weight: 700;
   text-decoration: none;
   list-style: none;
-  color: #FD2D01;
+  color: black;
   margin: 0px;
   cursor: pointer;
 }
