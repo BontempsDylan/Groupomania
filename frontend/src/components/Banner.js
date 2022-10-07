@@ -9,14 +9,14 @@ function Banner() {
   return (
       <header className="header">
         <div className='header__logo'><img src={logo} alt="logo" /></div> 
-        <ul className='header__bloc'>
-          <li className="header__bloc__connection">
+        <div className='header__bloc'>
+          <div className="header__bloc__connection">
             <Link to="/Formulaire" className="link">Connection</Link> 
-          </li>
-          <li className="header__bloc__inscription">
+          </div>
+          <div className="header__bloc__connection">
             <Link to="/Formulaire" className="link">Inscrivez-vous</Link>
-          </li>
-        </ul>
+          </div>
+        </div>
       </header>
   );
 }

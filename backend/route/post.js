@@ -10,6 +10,7 @@ const { finalValidation } = require('../middleware/final-validation')
 const router = express.Router();
 
 const post = require('../controllers/post');
+const { selectionValidation } = require('../middleware/validationPost');
 
 // costum multer to handle errors.
 
@@ -26,10 +27,7 @@ router.post(
         req.body = JSON.parse(req.body.post);
         next();
     },
-    body('publication')
-        .isLength({ min: 2, max: 300 })
-        .withMessage("Le nom doit contenir min 2 caractères et maximum 300 caractères")
-        .escape(),
+    selectionValidation,
     finalValidation,
     post.createPost
     );

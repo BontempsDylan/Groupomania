@@ -11,7 +11,9 @@ require('dotenv').config();
 
 exports.createPost = (req, res, next) => {
     const postObject = req.body;
-    if (req.file == undefined) {
+    if (req.file == undefined && postObject.publication == "") {
+      return res.status(400).json({ message: "Votre post doit minimum contenir une publication ou une photo"})
+    } else if (req.file == undefined) {
       const post = new Post({
         ...postObject,
       });
