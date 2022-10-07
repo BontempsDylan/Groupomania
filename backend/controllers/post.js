@@ -1,9 +1,10 @@
 // Package file system for modify the system of data for delete function.
 const fs = require('fs');
 // import of model's post.
-const Post = require('../models/Post');
 const { json } = require('express');
 require('dotenv').config();
+
+const Post = require('../models/Post');
 
 /*
  * objectif => create post with the model of post.
@@ -23,7 +24,7 @@ exports.createPost = (req, res, next) => {
     } else {
       const post = new Post({
         ...postObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${process.env.HOSTNAME}/images/${req.file.filename}`
         
       });
       post.save()
@@ -55,22 +56,22 @@ exports.modifyPost = (req, res, next) => {
 /*
  * objectif => delete one post.
  */
-
-exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id})
-    .then(post => {
-      if (post === null) {
-        return res.status(404).json({ message: "Cette publication n'éxiste pas." })
-      } else {
-        const filename = post.imageUrl.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-          Post.deleteOne({_id: req.params.id})
-            .then(() => { res.status(200).json({message: 'Publication supprimé !'})})
-            .catch(error => res.status(401).json({ error }));
-        });
-      }      
-    })     
-}
+exports.deletePost = async (req, res, next) => {
+  const post = await Post.findOne({ _id: req.params.id});
+  if (post === null) {
+    return res.status(404).json({ message: "Cette publication n'éxiste pas." })
+  }
+  // deleting image if exists in the post
+  if (post.imageUrl && fs.existsSync(`./images/${post.imageUrl.split('/images/')[1]}`)) {
+    fs.unlinkSync(`./images/${post.imageUrl.split('/images/')[1]}`);
+  }
+  try {
+    await Post.deleteOne({_id: req.params.id});
+    res.status(200).json({message: 'Publication supprimé !'});
+  } catch (error) {
+    res.status(401).json({ error })
+  }
+};
 
 /*
  * objectif => get one post.

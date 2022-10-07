@@ -11,7 +11,7 @@ function PostList() {
     useEffect(() => {
       fetch("http://localhost:3001/api/posts", {
         headers: {
-          // TODO use a dynamic token
+          // TODO use a dynamic token from local storage
           "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNhYTVjODdiNTE2MmY2ZDBjYWZjZTciLCJpYXQiOjE2NjUxNjcxMzIsImV4cCI6MTY2NTI1MzUzMn0.jxE55B3HAcglgH7pgl_lnh-sTZ5nFE28dkraa_jzr7E"
         }
       })

@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 module.exports = multer({ 
     storage: storage,
     fileFilter: (req, file, callback) => {
+        // TODO filename length to verify
         callback(null, Object.keys(MIME_TYPES).includes(file.mimetype));
     },
     limits: {fileSize: maxSize}
