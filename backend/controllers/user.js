@@ -4,6 +4,17 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User');
 const {sendServerErrorResponse, sendUnauthorizedResponse} = require("./../error-handlers");
 
+const createJwtResponse = (user) => {
+    return {
+        userId: user._id,
+        token: jwt.sign(
+            { userId: user._id, isAdmin: user.isAdmin },
+            process.env.SECRET_TOKEN,
+            { expiresIn: '24h'}
+        )
+    };
+};
+
 /*
 * Objectif => Create account. 
 */
@@ -14,9 +25,9 @@ exports.signup = (req, res, next) => {
             const user = new User({
                 email: req.body.email,
                 password: hash
-            })
+            });
             user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
+                .then(() => res.status(201).json(createJwtResponse(user)))
                 .catch(error => res.status(400).json({ error }));   
         })
         .catch(error => res.status(500).json({ error }));
@@ -46,14 +57,7 @@ exports.login = async (req, res, next) => {
         if(!passwordComparisonIsValid) {
             sendUnauthorizedResponse(res);
         } else {
-            res.status(200).json({
-                userId: user._id,
-                token: jwt.sign(
-                    { userId: user._id, isAdmin: user.isAdmin },
-                    process.env.SECRET_TOKEN,
-                    { expiresIn: '24h'}
-                )
-            });
+            res.status(200).json(createJwtResponse(user));
         }
     } catch(error) {
         console.error(error);
