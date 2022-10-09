@@ -12,7 +12,7 @@ function PostList() {
       fetch("http://localhost:3001/api/posts", {
         headers: {
           // TODO use a dynamic token from local storage
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNhYTVjODdiNTE2MmY2ZDBjYWZjZTciLCJpYXQiOjE2NjUxNjcxMzIsImV4cCI6MTY2NTI1MzUzMn0.jxE55B3HAcglgH7pgl_lnh-sTZ5nFE28dkraa_jzr7E"
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNhYTVjODdiNTE2MmY2ZDBjYWZjZTciLCJpYXQiOjE2NjUzMTIxNzQsImV4cCI6MTY2NTM5ODU3NH0.VrOviKrdnQ-g5gagjSr5fXdgNJeS-OPMW7Xn7kfgAIk"
         }
       })
         .then(res => res.json())

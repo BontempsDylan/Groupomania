@@ -26,10 +26,18 @@ exports.signup = (req, res, next) => {
                 password: hash
             });
             user.save()
-                .then(() => res.status(201).json(createJwtResponse(user)))
-                .catch(error => res.status(400).json({ error }));   
+                .then(() => {
+                    const token = createJwtResponse(user)
+                    let userToken = [];
+                    userToken.push(token);
+                    localStorage.setItem("userToken", JSON.stringify(userToken));
+                    res.status(201).json(token)
+                })
+                .catch(error => res.status(400).json({ error }));
+                 
         })
         .catch(error => res.status(500).json({ error }));
+         
 };
 
 /*
@@ -62,4 +70,5 @@ exports.login = async (req, res, next) => {
         console.error("BCRYPT COMPARE ERROR");
         sendServerErrorResponse(res);
     }
+    console.log(body.email);
 };
