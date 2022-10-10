@@ -13,6 +13,10 @@ const router = express.Router();
 
 router.post(
     '/signup', 
+    body('name')
+        .not().isEmpty()
+        .withMessage("Vous devez rentrer votre nom")
+        .escape(),
     body('password')
         .isLength({ min: 5, max: 20 })
         .withMessage("Votre mot de passe doit contenir minimum 5 caractères et maximum 20 caractères")

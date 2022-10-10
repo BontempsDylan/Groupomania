@@ -1,0 +1,75 @@
+
+.blocPostList {
+    width: 100%;
+    height: 2000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #040C0E;
+    .background-image {
+        width: 100%;
+        height: 400px;
+        background-size: contain;
+        background: no-repeat;
+    }
+    .blocExprime {
+        height: 200px;
+        width: 50%;
+        background: #132226;
+        margin-bottom: 30px;
+        &__2 {
+            &__bloc {
+                height: 100px;
+                width: 80%;
+                
+                &__2 {
+                    display: flex;
+                    align-items: center;
+                    height: 30px;
+                    background: #525B56;
+                    border-radius: 20px;
+                    &__texte {
+                        padding-left: 10px;
+                        color: white;
+                    }
+                }
+            }
+            &__placement {
+                height: 100px;
+                &__2 {
+                    &__btn {
+                        &__bloc {
+                            &__icone {
+
+                            }
+                            &__2 {
+                                &__texte {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    .blocCart {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        background: #132226;
+        
+        padding-left: 0px;
+        margin: 0px;
+        width: 50%;
+        height: 400px;
+        .blocCart__cart {
+            .blocCart__cart__img {
+                width: 50%;
+    
+            }
+    
+        }
+    }
+}

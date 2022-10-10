@@ -1,46 +1,36 @@
-import React, {  useState } from 'react';
-/* import { Context } from 'react'; */
+import React, {  useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import logo from '../assets/icon-left-font-monochrome-black.png';
 import '../styles/CSS/main.css';
 
 
 export default function Login() {
-  /* const { store, actions } = useContext(Context); */
-  const { email, setEmail } = useState("");
-  const { password, setPassword } = useState("");
+  const  [email, setEmail]  = useState("");
+  const  [password, setPassword]  = useState("");
+  const navigate = useNavigate()
   
-  const handleClick = () => {
-
-    const opts = {
-      method: 'POST',
-      Headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email, 
-        password: password
-      })
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/Post")
     }
-
-    fetch('http://localhost:3001/api/auth/login', opts)
-    .then(res => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        alert("There has been some error")
-      }
-    })
-    .then(data => {
-      console.log("this come from the backend", data);
-     
-      localStorage.getItem("token", data.token);
-    })
-    .catch(error => {
-      console.error("There was an error!!", error);
-    })
-
-  }
+  })
+  
+  async function handleClick() {
+      console.warn(email, password);
+      let item = {email, password};
+      let result = await fetch('http://localhost:3001/api/auth/login', {
+        method: 'POST',
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":'application/json'
+        },
+        body: JSON.stringify(item)
+      });
+      result = await result.json();
+      localStorage.setItem("user", JSON.stringify(result))
+      navigate("/Post")
+    }
 
   return (
     <html className="html--formualire">
@@ -50,8 +40,8 @@ export default function Login() {
           <div className="signup">
             <h2 className="form-title" id="signup">Connectez-vous</h2>
             <div className="form-holder">
-              <input type="text" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-              <input type="password" className="input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <input type="email" className="input email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+              <input type="password" className="input password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <button className="submit-btn" onClick={handleClick}>Connectez-vous</button>
           </div>

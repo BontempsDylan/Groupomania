@@ -22,16 +22,13 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
+                name: req.body.name,
                 email: req.body.email,
                 password: hash
             });
             user.save()
                 .then(() => {
-                    const token = createJwtResponse(user)
-                    let userToken = [];
-                    userToken.push(token);
-                    localStorage.setItem("userToken", JSON.stringify(userToken));
-                    res.status(201).json(token)
+                    res.status(200).json(createJwtResponse(user));
                 })
                 .catch(error => res.status(400).json({ error }));
                  
@@ -70,5 +67,4 @@ exports.login = async (req, res, next) => {
         console.error("BCRYPT COMPARE ERROR");
         sendServerErrorResponse(res);
     }
-    console.log(body.email);
 };

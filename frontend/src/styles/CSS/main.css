@@ -6,7 +6,7 @@
 
 html, body {
   width: 100%;
-  height: auto;
+  height: 100%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -26,13 +26,13 @@ html, body {
   justify-content: center;
   border-bottom: 1px solid #4E5166;
   box-shadow: 0.5px 0.5px 10px 0.5px #4E5166;
-  background-color: #DD6E42;
+  background-color: #132226;
   transition: height 1s, transform 2s;
 }
 .header__logo {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   padding-left: 25px;
 }
 
@@ -51,7 +51,7 @@ img {
     transition: width 1s, transform 2s;
   }
 }
-.html--formulaire, .body--formualire {
+.body--formualire {
   position: relative;
   min-height: 100vh;
   background-color: #DD6E42;
@@ -284,6 +284,57 @@ img {
     font-size: 18px;
     transition: font-size 1s;
   }
+}
+.blocPostList {
+  width: 100%;
+  height: 2000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #040C0E;
+}
+.blocPostList .background-image {
+  width: 100%;
+  height: 400px;
+  background-size: contain;
+  background: no-repeat;
+}
+.blocPostList .blocExprime {
+  height: 200px;
+  width: 50%;
+  background: #132226;
+  margin-bottom: 30px;
+}
+.blocPostList .blocExprime__2__bloc {
+  height: 100px;
+  width: 80%;
+}
+.blocPostList .blocExprime__2__bloc__2 {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  background: #525B56;
+  border-radius: 20px;
+}
+.blocPostList .blocExprime__2__bloc__2__texte {
+  padding-left: 10px;
+  color: white;
+}
+.blocPostList .blocExprime__2__placement {
+  height: 100px;
+}
+.blocPostList .blocCart {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  background: #132226;
+  padding-left: 0px;
+  margin: 0px;
+  width: 50%;
+  height: 400px;
+}
+.blocPostList .blocCart .blocCart__cart .blocCart__cart__img {
+  width: 50%;
 }
 
 /*# sourceMappingURL=main.css.map */

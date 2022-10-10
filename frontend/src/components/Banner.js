@@ -1,5 +1,5 @@
 
-import logo from '../assets/icon-left-font-monochrome-black.png';
+import logo from '../assets/icon-left-font-monochrome-white.png';
 import '../styles/CSS/main.css';
 
 // const isLoggedIn = true;
