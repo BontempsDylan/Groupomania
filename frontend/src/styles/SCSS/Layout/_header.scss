@@ -2,8 +2,9 @@
     width: 100%;
     height: 80px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #4E5166;
     box-shadow: 0.5px 0.5px 10px 0.5px #4E5166;
     background-color: #132226;
@@ -15,6 +16,12 @@
         padding-left: 25px;
     }
     
+  }
+  .fa-sign-out-alt {
+    font-size: 20px;
+    color: white;
+    padding-right: 25px
+    ;
   }
   
   img {

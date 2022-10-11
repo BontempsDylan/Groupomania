@@ -1,5 +1,6 @@
 import { useEffect, useState} from "react";
-import background from '../assets/73-1024x512.jpg';
+import background from '../assets/73-1024x512_texte3.jpg';
+import logoPost from '../assets/logo-post.png'
 
 function PostList() {
     const [error, setError] = useState(null);
@@ -42,19 +43,22 @@ function PostList() {
     } else {
       return (
         <div className="blocPostList">
-          <div className="background-image" style={{ backgroundImage: `url(${background})`}}></div>
+          <div className="bloc_image"><img src={background} className="background-image" alt="Tasse de café sur une table en bois."/><div className="ombre"></div></div>
+          <div className="ombre"></div>
           <div className="blocExprime">
             <div className="blocExprime__2">
               <div className="blocExprime__2__bloc">
-                <div className="blocExprime__2__bloc__2">
-                  <span className="blocExprime__2__bloc__2__texte">Exprimez-vous.</span>
+                <div className="blocExprime__2__bloc__center">
+                  <div className="blocExprime__2__bloc__center__form">
+                    <span className="blocExprime__2__bloc__center__form__texte">Exprimez-vous.</span>
+                  </div>
                 </div>
               </div>
               <div className="blocExprime__2__placement">
                 <div className="blocExprime__2__placement__2">
                   <div role="button" className="blocExprime__2__placement__2__btn">
                     <div className="blocExprime__2__placement__2__btn__bloc">
-                      <span className="blocExprime__2__placement__2__btn__bloc__icone"><i></i></span>
+                      <span className="blocExprime__2__placement__2__btn__bloc__icone"><i class="fas fa-images"></i></span>
                       <span className="blocExprime__2__placement__2__btn__bloc__2">
                         <span className="blocExprime__2__placement__2__btn__bloc__2__texte">Photo</span>
                       </span>
@@ -64,24 +68,39 @@ function PostList() {
               </div>
             </div>
           </div>
-          <ul className="blocCart">
+          <div className="vitrine">
             {posts.map(post => (
-              <li className="blocCart__cart" key={post._id}>
-                <img src={post.imageUrl} alt="" className="blocCart__cart__img"/>
-                <div className="blocCart__cart">
-                  <div className="blocCart__cart__post">
-                      <p></p>
-                      <p>{post.publication}</p>
-                      <div className="blocCart__cart__post__like">
+              <ul className="vitrine__bloc">
+                <li className="vitrine__bloc__cart" key={post._id}>
+                  <div className="vitrine__bloc__cart">
+                    <div className="vitrine__bloc__cart__post">
+                      <div className="vitrine__bloc__cart__post__logo">
+                        <div className="placement">
+                          <img src={logoPost} alt=""/>
+                        </div>
+                      </div>
+                      <div className="vitrine__bloc__cart__post__bloc">
+                        <div className="vitrine__bloc__cart__post__bloc__text">
+                          <p>{post.publication}</p>
+                        </div>
+                      </div>
+                    </div>               
+                    <div className="vitrine__bloc__cart__img"><img className="isereImage" src={post.imageUrl} alt=""/></div>
+                    <div className="vitrine__bloc__cart__like">
+                      <div className="vitrine__bloc__cart__like__center">
+                        <div className="wrapper">
                           <i className="far fa-heart base-icon"></i>
                           <i className="fas fa-heart color-icon"></i>
-                          <p>{post.likes}</p>
+                        </div>
+                        <p>{post.likes}</p>
                       </div>
+                      <div></div>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </ul>
             ))}
-          </ul>
+          </div>
         </div>
       );
     }

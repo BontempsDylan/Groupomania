@@ -8,7 +8,8 @@ function Banner() {
 
   return (
       <header className="header">
-        <div className='header__logo'><img src={logo} alt="logo" /></div> 
+        <div className='header__logo'><img src={logo} alt="logo" /></div>
+        <i class="fas fa-sign-out-alt"></i> 
       </header>
   );
 }
