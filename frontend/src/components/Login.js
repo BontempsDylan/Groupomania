@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
-import logo from '../assets/icon-left-font-monochrome-black.png';
+import logo from '../assets/icon-left-font-monochrome-white.png';
 import '../styles/CSS/main.css';
 
 
@@ -35,7 +35,9 @@ export default function Login() {
   return (
     <html className="html--formualire">
       <body className="body--formualire">
-        <img src={logo} alt="logo" />
+        <div className='bandeauLogo'>
+          <img src={logo} alt="logo" />
+        </div>
         <div className="form-structor">
           <div className="signup">
             <h2 className="form-title" id="signup">Connectez-vous</h2>

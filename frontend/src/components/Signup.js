@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import logo from '../assets/icon-left-font-monochrome-black.png';
+import logo from '../assets/icon-left-font-monochrome-white.png';
 import '../styles/CSS/main.css';
 
 export default function Signup() {
@@ -35,23 +35,25 @@ export default function Signup() {
     return (
       <html className="html--formualire">
         <body className="body--formualire">
+          <div className='bandeauLogo'>
             <img src={logo} alt="logo" />
-            <div className="form-structor">
-                <div className="signup">
-                <h2 className="form-title" id="signup">Inscrivez-vous</h2>
-                <div className="form-holder">
-                    <input type="text" className="input name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
-                    <input type="text" className="input email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    <input type="password" className="input password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                </div>
-                <button className="submit-btn" onClick={handleClick}>Connectez-vous</button>
-                </div>
-                <div className="login slide-up">
-                <div className="center">
-                    <Link to="/" className="form-title"><span>ou</span>Connectez-vous</Link>
-                </div>
-                </div>
-            </div>
+          </div>
+          <div className="form-structor">
+              <div className="signup">
+              <h2 className="form-title" id="signup">Inscrivez-vous</h2>
+              <div className="form-holder">
+                  <input type="text" className="input name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                  <input type="text" className="input email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                  <input type="password" className="input password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              </div>
+              <button className="submit-btn" onClick={handleClick}>Connectez-vous</button>
+              </div>
+              <div className="login slide-up">
+              <div className="center">
+                  <Link to="/" className="form-title"><span>ou</span>Connectez-vous</Link>
+              </div>
+              </div>
+          </div>
         </body>
       </html>
     );

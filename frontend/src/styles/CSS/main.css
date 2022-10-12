@@ -61,12 +61,24 @@ img {
 .body--formualire {
   position: relative;
   min-height: 100vh;
-  background-color: #DD6E42;
+  background-color: #040C0E;
   display: flex;
   align-items: center;
-  justify-content: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.bandeauLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background-color: #132226;
+  margin-bottom: 18px;
+}
+.bandeauLogo img {
+  width: 200px;
 }
 
 .form-structor {
