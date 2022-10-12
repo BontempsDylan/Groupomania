@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import background from '../assets/73-1024x512_texte3.jpg';
 import logoPost from '../assets/logo-post.png'
 
@@ -6,6 +6,7 @@ function PostList() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setposts] = useState([]);
+    const [users, setusers] = useState([]);
   
     // Note: the empty deps array [] means
     // this useEffect will run once
@@ -25,6 +26,7 @@ function PostList() {
         (result) => {
           setIsLoaded(true);
           setposts(result);
+          setusers(result);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -35,6 +37,8 @@ function PostList() {
         }
       )      
     }, []);
+
+    console.log(users);
      
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -58,7 +62,7 @@ function PostList() {
                 <div className="blocExprime__2__placement__2">
                   <div role="button" className="blocExprime__2__placement__2__btn">
                     <div className="blocExprime__2__placement__2__btn__bloc">
-                      <span className="blocExprime__2__placement__2__btn__bloc__icone"><i class="fas fa-images"></i></span>
+                      <span className="blocExprime__2__placement__2__btn__bloc__icone"><i className="fas fa-images"></i></span>
                       <span className="blocExprime__2__placement__2__btn__bloc__2">
                         <span className="blocExprime__2__placement__2__btn__bloc__2__texte">Photo</span>
                       </span>
@@ -72,30 +76,33 @@ function PostList() {
             {posts.map(post => (
               <ul className="vitrine__bloc">
                 <li className="vitrine__bloc__cart" key={post._id}>
-                  <div className="vitrine__bloc__cart">
-                    <div className="vitrine__bloc__cart__post">
-                      <div className="vitrine__bloc__cart__post__logo">
-                        <div className="placement">
-                          <img src={logoPost} alt=""/>
-                        </div>
+                  <div className="vitrine__bloc__cart__post">
+                    <div className="vitrine__bloc__cart__post__logo">
+                      <div className="placement">
+                        <img src={logoPost} alt=""/>
                       </div>
-                      <div className="vitrine__bloc__cart__post__bloc">
-                        <div className="vitrine__bloc__cart__post__bloc__text">
-                          <p>{post.publication}</p>
+                      {users.map(user => (
+                        <div>
+                          <div>{user.name}</div>
                         </div>
-                      </div>
-                    </div>               
-                    <div className="vitrine__bloc__cart__img"><img className="isereImage" src={post.imageUrl} alt=""/></div>
-                    <div className="vitrine__bloc__cart__like">
-                      <div className="vitrine__bloc__cart__like__center">
-                        <div className="wrapper">
-                          <i className="far fa-heart base-icon"></i>
-                          <i className="fas fa-heart color-icon"></i>
-                        </div>
-                        <p>{post.likes}</p>
-                      </div>
-                      <div></div>
+                      ))}
                     </div>
+                    <div className="vitrine__bloc__cart__post__bloc">
+                      <div className="vitrine__bloc__cart__post__bloc__text">
+                        <p>{post.publication}</p>
+                      </div>
+                    </div>
+                  </div>               
+                  <div className="vitrine__bloc__cart__img"><img className="isereImage" src={post.imageUrl} alt=""/></div>
+                  <div className="vitrine__bloc__cart__like">
+                    <div className="vitrine__bloc__cart__like__center">
+                      <div className="wrapper">
+                        <i className="far fa-heart base-icon"></i>
+                        <i className="fas fa-heart color-icon"></i>
+                      </div>
+                      <p>{post.likes}</p>
+                    </div>
+                    <div></div>
                   </div>
                 </li>
               </ul>

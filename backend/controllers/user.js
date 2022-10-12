@@ -8,7 +8,7 @@ const createJwtResponse = (user) => {
     return {
         userId: user._id,
         token: jwt.sign(
-            { userId: user._id, isAdmin: user.isAdmin },
+            { userId: user._id, isAdmin: user.isAdmin, username: user.name},
             process.env.SECRET_TOKEN,
             { expiresIn: '24h'}
         )
