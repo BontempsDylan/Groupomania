@@ -8,29 +8,37 @@ import '../styles/CSS/main.css';
 export default function Login() {
   const  [email, setEmail]  = useState("");
   const  [password, setPassword]  = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   
   useEffect(() => {
-    if (localStorage.getItem("user")) {
+    if (localStorage.getItem("error")) {
+      localStorage.clear()
+    } else if (localStorage.getItem("user")) {
       navigate("/Post")
     }
   })
   
   async function handleClick() {
-      console.warn(email, password);
-      let item = {email, password};
-      let result = await fetch('http://localhost:3001/api/auth/login', {
-        method: 'POST',
-        headers:{
-          "Content-Type":"application/json",
-          "Accept":'application/json'
-        },
-        body: JSON.stringify(item)
-      });
+    console.warn(email, password);
+    let item = {email, password};
+    let result = await fetch('http://localhost:3001/api/auth/login', {
+      method: 'POST',
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":'application/json'
+      },
+      body: JSON.stringify(item)
+    });
+    if (result.status !== 403 && result !== "message") {
       result = await result.json();
+      console.log(result);
       localStorage.setItem("user", JSON.stringify(result))
       navigate("/Post")
     }
+    console.log(localStorage.getItem("user"));
+    
+    /* localStorage.setItem("user", JSON.stringify(result)) */
+  }
 
   return (
     <html className="html--formualire">

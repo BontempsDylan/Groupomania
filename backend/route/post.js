@@ -4,13 +4,13 @@ const auth = require('../middleware/auth');
 // import multer for image's gestion.
 const multer = require('../middleware/multer-config');
 // import express-validator for validate all writing fields.
-const { body } = require('express-validator');
+const { body, check } = require('express-validator');
 const { finalValidation } = require('../middleware/final-validation')
 
 const router = express.Router();
 
 const post = require('../controllers/post');
-const { selectionValidation } = require('../middleware/validationPost');
+
 
 // costum multer to handle errors.
 
@@ -27,7 +27,10 @@ router.post(
         req.body = JSON.parse(req.body.post);
         next();
     },
-    selectionValidation,
+    body('publication') 
+        .isLength({ max: 300 })
+        .withMessage("La publication doit contenir maximum 300 caractères.")
+        .escape(),
     finalValidation,
     post.createPost
     );
@@ -40,8 +43,8 @@ router.put(
         next();
     },
     body('publication')
-        .isLength({ min: 2, max: 300 })
-        .withMessage("La publication doit contenir min 2 caractères et maximum 300 caractères")
+        .isLength({ max: 300 })
+        .withMessage("La publication doit contenir maximum 300 caractères")
         .escape(),
     finalValidation, 
     post.modifyPost
