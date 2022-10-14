@@ -1,55 +1,56 @@
+import React, {useState, useRef, useEffect} from 'react'
 import { CSSTransition } from 'react-transition-group';
-import React, { useState, useEffect, useRef } from 'react';
-import { ReactComponent as Supprimer } from '../assets/supprimer.svg';
-import { ReactComponent as Modifier } from '../assets/modifier.svg';
-import { ReactComponent as Retour } from '../assets/retour.svg';
-import { ReactComponent as Menu } from '../assets/menu.svg';
-import '../styles/CSS/main.css';
 
-const DropdownNavbar = () => {
-    <Navbar>
-        <NavItem icon={<Menu />}>
-        <DropdownMenu></DropdownMenu>
-        </NavItem>
-    </Navbar>
-}
+import { ReactComponent as Supprimer } from '../../assets/supprimer.svg';
+import { ReactComponent as Modifier } from '../../assets/modifier.svg';
+import { ReactComponent as Retour } from '../../assets/retour.svg';
 
-function Navbar(props) {
-    return (
-      <nav className="navbar">
-        <ul className="navbar_nav">{props.children}</ul>
-      </nav>
-    );
-  }
-  
-  function NavItem(props) {
-    const [ open, setOpen ] = useState(false);
-  // eslint-disable-next-line
-    return (
-      <li className='nav-item'>
-        <button className='icon-button' onClick={() => setOpen(!open)}> 
-          {props.icon}
-        </button>
-  
-        {open && props.children}
-      </li>
-    );
-  }
-  
-  function DropdownMenu() {
+function DropdownMenu(props) {
+
+    const {post} = props;
+
     const [ activeMenu, setActiveMenu ] = useState('main');
     const [ menuHeight, setMenuHeight ] = useState(null);
+    const [ publication, setPublication ]  = useState("");
+    const [ file, setFile ]  = useState(null);
     const dropdownRef = useRef(null);
-  
+
+    async function handleSubmitPutRequest() {
+
+    // TODO if local state variable `file` is not null use formData like in the example below
+    // TODO do not forget to use multipart/form-data in the fetch request
+    // TODO body is not supposed to be stringified => body: formData
+    // const formData = new FormData();
+    // formData.append("publication", publication);
+    // // HTML file input, chosen by user
+    // formData.append("image", file);
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.token;
+    // console.warn(publication, file);
+    // let item = {publication, file};
+    let item = {publication};
+    const id = post._id
+    await fetch(`http://localhost:3001/api/posts/${id}`, {
+        method: 'PUT',
+        headers:{
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(item)
+      });
+    }
+
     useEffect(() => {
       setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
     }, [])
-  
+
     function calcHeight(el) {
       const height = el.offsetHeight;
       setMenuHeight(height);
     }
-  
+
     function DropdownItem(props) {
       return (
         <button className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
@@ -59,10 +60,10 @@ function Navbar(props) {
         </button>
       )
     }
-  
+
     return (
       <div className='dropdown' style={{ height: menuHeight }} ref={ dropdownRef }>
-  
+
         <CSSTransition
           in={activeMenu === 'main'}
           timeout={500}
@@ -77,10 +78,10 @@ function Navbar(props) {
               goToMenu="modifier">
               Modifier
             </DropdownItem>
-  
+
           </div> 
         </CSSTransition>
-  
+
         <CSSTransition
           in={activeMenu === "modifier"}
           timeout={500}
@@ -92,12 +93,16 @@ function Navbar(props) {
               <h2>Retour</h2>
             </DropdownItem>
             <div className='bloc-input'>
-              <input type="text" className='input-post' placeholder='Modifier votre publication.' style={{height: 120}}></input>
+              <input type="text" className='input-post' placeholder='Modifier votre publication.' style={{height: 120}} value={publication} onChange={(e) => setPublication(e.target.value)}></input>
               <div className='input-file' style={{height: 30}}>
-                <input type="file" accept="image/*" className='file'></input>
+                <input type="file" accept="image/*" className='file' onChange={(e) => {
+                  if (e.target.files.length > 0) {
+                    setFile(e.target.files[0]);
+                  }
+                }}></input>
               </div>
               <div className='bloc-button-modifier' style={{height: 60}}>
-                <button className='modifier-post'>Modifier la publication</button>
+                <button className='modifier-post' onClick={handleSubmitPutRequest}>Modifier la publication</button>
               </div>
             </div>
           </div>
@@ -106,4 +111,4 @@ function Navbar(props) {
     )
 }
 
-export default DropdownNavbar
+export default DropdownMenu;

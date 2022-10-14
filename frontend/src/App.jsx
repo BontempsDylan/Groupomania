@@ -1,7 +1,8 @@
-import BannerPostList from './BannerPostlist';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from './Login';
-import Signup from './Signup';
+
+import BannerPostList from './pages/BannerPostlist';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 
 function App() {
