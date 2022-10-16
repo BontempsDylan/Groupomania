@@ -19,7 +19,7 @@ export default function Signup() {
   async function handleClick() {
       console.warn(name, email, password);
       let item = {name, email, password};
-      let result = await fetch('http://localhost:3001/api/auth/signup', {
+      let APICall = await fetch('http://localhost:3001/api/auth/signup', {
         method: 'POST',
         headers:{
           "Content-Type":"application/json",
@@ -27,9 +27,13 @@ export default function Signup() {
         },
         body: JSON.stringify(item)
       });
-      result = await result.json();
-      localStorage.setItem("user", JSON.stringify(result))
-      navigate("/Post")
+      if (APICall.status === 200) {
+        const result = await APICall.json();
+        localStorage.setItem("user", JSON.stringify(result));
+        navigate("/Post");
+      } else {
+        alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres ");
+      }
     }
 
     return (

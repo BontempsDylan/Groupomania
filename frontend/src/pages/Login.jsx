@@ -33,12 +33,12 @@ export default function Login() {
       const result = await APICall.json();
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/Post");
+    } else {
+      alert("Adresse email ou mot de passe incorect");
     }
-    // TODO show feedback to the user in else statement
   }
 
   return (
-    // TODO put the correct class in this wrapper div to style it
     <div className='page--formualaire'>
       <div className='bandeauLogo'>
         <img src={logo} alt="logo" />
