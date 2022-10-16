@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
     // TODO put the correct class in this wrapper div to style it
-    <div>
+    <div className='page--formualaire'>
       <div className='bandeauLogo'>
         <img src={logo} alt="logo" />
       </div>
