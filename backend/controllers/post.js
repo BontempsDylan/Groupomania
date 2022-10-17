@@ -39,7 +39,7 @@ exports.createPost = (req, res, next) => {
 
 exports.modifyPost = (req, res, next) => {
     const postObject = req.file ? {
-      ...json.parse(req.body.post),
+      ...json(req.body.post),
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body }
 

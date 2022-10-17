@@ -14,33 +14,54 @@ function DropdownMenu(props) {
     const [ publication, setPublication ]  = useState("");
     const [ file, setFile ]  = useState(null);
     const dropdownRef = useRef(null);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user.token
+    const id = post._id
+    const combined = {
+      publication: publication,
+      userId: user.userId
+    }
+    const dataPost = JSON.stringify(combined)
+    
 
     async function handleSubmitPutRequest() {
 
-    // TODO if local state variable `file` is not null use formData like in the example below
-    // TODO do not forget to use multipart/form-data in the fetch request
-    // TODO body is not supposed to be stringified => body: formData
-    // const formData = new FormData();
-    // formData.append("publication", publication);
-    // // HTML file input, chosen by user
-    // formData.append("image", file);
-
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token;
-    // console.warn(publication, file);
-    // let item = {publication, file};
-    let item = {publication};
-    const id = post._id
-    await fetch(`http://localhost:3001/api/posts/${id}`, {
+      const formData = new FormData();
+      formData.append("post", dataPost);
+      formData.append("image", file);
+      
+      
+      
+      await fetch(`http://localhost:3001/api/posts/${id}`, {
         method: 'PUT',
-        headers:{
+        headers: {
           "Authorization": "Bearer " + token,
-          "Content-Type": "application/json",
-          "Accept": "application/json"
         },
-        body: JSON.stringify(item)
-      });
+        body: formData
+      })
+      .then(response => response.json()) 
+      .catch(error => console.error({ message: 'erreur' } )) 
+      .then(data => console.log(data))
+      window.location.reload()   
     }
+    
+    async function handleSubmitDelRequest() {
+      await fetch(`http://localhost:3001/api/posts/${id}`, {
+          method: 'DELETE',
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type":"application/json",
+            "Accept":'application/json'
+          },
+        })
+        .then(response => response.json()) 
+        .catch(error => console.error({ message: 'erreur' } )) 
+        .then(data => console.log(data))
+        window.location.reload()
+    }
+
+    
+
 
     useEffect(() => {
       setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -71,7 +92,7 @@ function DropdownMenu(props) {
           unmountOnExit
           onEnter={calcHeight}>
           <div className='menu'>
-            <DropdownItem leftIcon={<Supprimer />}>Supprimer</DropdownItem>
+            <DropdownItem leftIcon={<Supprimer />}><button className='delete-post' onClick={handleSubmitDelRequest}>Supprimer</button></DropdownItem>
             <DropdownItem 
               leftIcon={<Modifier />}
               rightIcon={<Modifier />}
@@ -93,7 +114,7 @@ function DropdownMenu(props) {
               <h2>Retour</h2>
             </DropdownItem>
             <div className='bloc-input'>
-              <input type="text" className='input-post' placeholder='Modifier votre publication.' style={{height: 120}} value={publication} onChange={(e) => setPublication(e.target.value)}></input>
+              <textarea type="text" className='input-post' placeholder={post.publication} style={{height: 120}} value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
               <div className='input-file' style={{height: 30}}>
                 <input type="file" accept="image/*" className='file' onChange={(e) => {
                   if (e.target.files.length > 0) {

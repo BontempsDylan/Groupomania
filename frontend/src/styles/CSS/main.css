@@ -704,10 +704,16 @@ a {
   width: 285px;
   background-color: var(--colour-tertiairer);
   margin-bottom: 10px;
+  text-align: start;
+  position: relative;
+  font-size: 16px;
 }
 .input-post::placeholder {
   color: var(--colour-texte-input);
-  font-size: 18px;
+  white-space: pre-line;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   padding-left: 5px;
 }
 
@@ -728,6 +734,16 @@ a {
   color: var(--colour-texte-input);
   background-color: var(--colour-autre);
   border-radius: var(--border-radius);
+  border: none;
+}
+
+.delete-post {
+  height: 40px;
+  font-size: 17px;
+  color: var(--colour-texte);
+  background-color: var(--colour-secondary);
+  border-radius: var(--border-radius);
+  padding: 0;
   border: none;
 }
 

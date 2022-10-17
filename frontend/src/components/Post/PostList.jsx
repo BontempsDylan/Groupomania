@@ -10,6 +10,8 @@ function PostList() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setposts] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : false;
 
   const navigate = useNavigate();
 
@@ -17,8 +19,7 @@ function PostList() {
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user ? user.token : false;
+    
     if (!token) {
       localStorage.removeItem("user");
       navigate("/login");
