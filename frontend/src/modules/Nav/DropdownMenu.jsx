@@ -83,8 +83,7 @@ function DropdownMenu(props) {
     }
 
     return (
-      <div className='dropdown' style={{ height: menuHeight }} ref={ dropdownRef }>
-
+      <div className='dropdown' ref={ dropdownRef }>
         <CSSTransition
           in={activeMenu === 'main'}
           timeout={500}
@@ -114,15 +113,17 @@ function DropdownMenu(props) {
               <h2>Retour</h2>
             </DropdownItem>
             <div className='bloc-input'>
-              <textarea type="text" className='input-post' placeholder={post.publication} style={{height: 120}} value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
-              <div className='input-file' style={{height: 30}}>
-                <input type="file" accept="image/*" className='file' onChange={(e) => {
+              <textarea type="text" className='input-post' placeholder={post.publication}  value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
+              <div className='conteneur-input'>
+                <label for="input-file"><i className="fas fa-images" /></label>
+                <input type="file" accept="image/*" className='input-file' onChange={(e) => {
                   if (e.target.files.length > 0) {
                     setFile(e.target.files[0]);
                   }
                 }}></input>
+                <div className='display-image' placeholder=''>{/* {fileName} */}</div>
               </div>
-              <div className='bloc-button-modifier' style={{height: 60}}>
+              <div className='bloc-button-modifier'>
                 <button className='modifier-post' onClick={handleSubmitPutRequest}>Modifier la publication</button>
               </div>
             </div>

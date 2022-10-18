@@ -1,31 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-// TODO
+import DropdownMenuAddPost from '../../modules/Nav/DropdownMenuAddPost';
+import NavBarAddPost from '../../modules/Nav/NavBarAddPost';
+import NavItemTextAddPost from '../../modules/Nav/NavItemTextAddPost copy';
+import NavItemPhotoAddPost from '../../modules/Nav/NavItemPhotoAddPost'
+
 const AddPost = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const togglePoppup = () => {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <div className="blocExprime">
-        <div className="blocExprime__2">
-        <div className="blocExprime__2__bloc">
-            <div className="blocExprime__2__bloc__center">
-            <div className="blocExprime__2__bloc__center__form">
-                <span className="blocExprime__2__bloc__center__form__texte">Exprimez-vous.</span>
-            </div>
-            </div>
-        </div>
-        <div className="blocExprime__2__placement">
-            <div className="blocExprime__2__placement__2">
-            <div role="button" className="blocExprime__2__placement__2__btn">
-                <div className="blocExprime__2__placement__2__btn__bloc">
-                <span className="blocExprime__2__placement__2__btn__bloc__icone"><i className="fas fa-images"></i></span>
-                <span className="blocExprime__2__placement__2__btn__bloc__2">
-                    <span className="blocExprime__2__placement__2__btn__bloc__2__texte">Photo</span>
-                </span>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
+    <>
+        <NavBarAddPost>
+            <NavItemTextAddPost handleOpen={togglePoppup}>
+              {isOpen && <DropdownMenuAddPost handleClose={togglePoppup}/>}
+            </NavItemTextAddPost>
+            <NavItemPhotoAddPost handleOpen={togglePoppup} />
+        </NavBarAddPost>
+    </>
   );
 };
 
