@@ -56,7 +56,7 @@ function PostList() {
       <div className="blocPostList">
         <div className="bloc_image" ><img src={background} className="background-image" alt="Tasse de café sur une table en bois."/><div className="ombre"></div></div>
         <div className="ombre"></div>
-        <AddPost/>
+        <AddPost />
         <div className="vitrine">
           {posts.map(post => <PostItem key={post._id} post={post}/>)}
         </div>

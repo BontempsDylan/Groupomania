@@ -3,7 +3,7 @@ import React from 'react'
 import logoPost from '../../assets/logo-post.png';
 import Navbar from '../../modules/Nav/Navbar';
 import NavItem from '../../modules/Nav/NavItem';
-import DropdownMenu from '../../modules/Nav/DropdownMenu';
+import DropdownMenu from '../../modules/Drop/DropdownMenu';
 
 // ! TODO simplify this and split it into multiple components/modules
 // TODO DropdownMenu should be dumb
