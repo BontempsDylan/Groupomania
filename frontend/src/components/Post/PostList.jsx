@@ -54,8 +54,15 @@ function PostList() {
   } else {
     return (
       <div className="blocPostList">
-        <div className="bloc_image" ><img src={background} className="background-image" alt="Tasse de café sur une table en bois."/><div className="ombre"></div></div>
-        <div className="ombre"></div>
+        <div className="bloc_image" >
+          <div className='positionOmbre'>
+            <img src={background} className="background-image" alt="Tasse de café sur une table en bois."/>
+            <div className="ombre"></div>
+            <div className="ombre-top"></div>
+            <div className="ombre-right"></div>
+            <div className="ombre-left"></div>
+          </div>
+        </div>
         <AddPost />
         <div className="vitrine">
           {posts.map(post => <PostItem key={post._id} post={post}/>)}

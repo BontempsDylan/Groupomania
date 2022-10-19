@@ -18,40 +18,69 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%; 
+     
     width: 100%; 
     background: var(--colour-primary);
     .bloc_image{
         position: relative;
         width: 100%;
+        max-width: 1175px;
         img {
             object-fit: cover; 
             width: 100%;          
         }
         .ombre {
             position: absolute;
-            top: 75px;
+            bottom: 0px;
             z-index: 1;
-            height: 200px;
+            height: 140px;
             width: 100%;
-            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 98%);
+        }
+        .ombre-top {
+            position: absolute;
+            top: 0px;
+            height: 0px;
+            width: 100%;
+            background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+            transition: height 1s;
+        }
+        .ombre-right {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            height: 100%;
+            width: 0px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+            transition: width 1s;
+        }
+        .ombre-left {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 0px;
+            background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+            transition: width 1s;
         }
     }
+
     .navBar-addPost {
         display: flex;
         flex-direction: column;
-        background: var(--colour-secondary);
-        border-radius: 10px;
-        height: 150px;
         margin-top: 40px;
         margin-bottom: 30px;
         width: 90%;
+        height: 220px;
+        max-height: 230px;
+        border-radius: 10px;
+        background: var(--colour-secondary);
         .navBar-nav-addPost {
             height: 100%;
             .navItem-addPost {
                 display: flex;
                 justify-content: flex-start;
-                height: 75px;               
+                height: 50%;               
                 &__center {
                     display: flex;
                     align-items: center;
@@ -92,6 +121,7 @@ html {
                     background-color: rgba(0,0,0,0.5);
                     .menuAddPost {
                         width: 85%;
+                        max-width: 680px;
                         background-color: var(--colour-secondary);
                         border-radius: var(--border-radius);
                         .menu-item {
@@ -133,7 +163,7 @@ html {
                             align-items: center;
                             .input-post {
                                 position: relative;
-                                width: 285px;
+                                width: 90%;
                                 height: 120px;
                                 margin-bottom: 10px;
                                 border: none;
@@ -320,8 +350,6 @@ html {
                                         overflow: hidden;
                                         background-color: var(--colour-secondary);
                                         transform: translateX(-45%);
-                                        transition: height var(--speed) ease;
-                                        transition: width 200ms ease;
                                         .menu {
                                             width: 100%;
                                             background-color: var(--colour-secondary);
@@ -570,9 +598,6 @@ a {
     transform: translateX(0%);
     transition: all var(--speed) ease;
 }
-.menu-secondary-exit {
-
-}
 .menu-secondary-exit-active {
     transform: translateX(110%);
     transition: all var(--speed) ease;
@@ -585,96 +610,47 @@ a {
         align-items: center;
         width: 100%;   
         background: #040C0E;
-        .bloc_image { 
-            display: flex;
-            width: 100%;
-            img {
-                object-fit: cover;
-            }
-            .ombre {
-                height: 100%;
-                
-            }
-        }
-        .blocExprime {
-            
-            &__2 {
-                
-                &__bloc {
-                                  
-                    &__center {
-                                            
-                        &__form {
-                            
-                            
-                            &__texte {
-                                
-                            }
-                        }
-                        
-                    }
-                }
-                &__placement {
-                    
-                    &__2 {
-                                           
-                        &__btn {
-                            &__bloc {
-                                
-                                
-                                &__2 {
-                                    &__texte {
-                                        
-    
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-    
-            }
+        .navBar-addPost {
+            max-width: 680px;
         }
         .vitrine {
-            
             &__bloc {
-                
-                &__cart {
-                    
-                    &__post {
-                        
-                        &__bloc{
-                            
-                            &__text{
-                                
-                                p {
-                                    
-                                }
-                            }
-                        }  
-                    }
-                    &__img {
-                        
-                        .isereImage {
-                            
-                            img {
-                                
-                            }
-                        }
-                    }
-                    &__like {
-                        
-                        &__center {
-                            
-                            p {
-                                
-                            }
-                        }
-                    }
-            
-                }
+                max-width: 680px;
             }
         }
         
     }   
+}
+
+@media screen and (min-width:1177px) {
+    .blocPostList {
+        .bloc_image { 
+            .ombre-top {
+                position: absolute;
+                top: 0px;
+                height: 200px;
+                width: 100%;
+                background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+                transition: height 1s;
+            }
+            .ombre-right {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                height: 100%;
+                width: 200px;
+                background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+                transition: width 1s;
+            }
+            .ombre-left {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                height: 100%;
+                width: 200px;
+                background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(4,12,14,1) 90%);
+                transition: width 1s;
+            }
+        }
+    }
 }
