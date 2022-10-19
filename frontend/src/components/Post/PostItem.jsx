@@ -13,9 +13,51 @@ const PostItem = (props) => {
 
   const {post} = props;
 
-//   const myFunc = () => {
-//     console.log("I am called from the parent");
-//   };
+  async function handleClickSubmitLike() {
+    const dataStorage = JSON.parse(localStorage.getItem("user"));
+    const token = dataStorage.token
+    const userId = dataStorage.userId
+    const id = post._id
+    const like = {
+        like: 1,
+        userId: userId
+    }
+    const unlike = {
+        like: 0,
+        userId: userId
+    }
+    const likeStringify = JSON.stringify(like)
+    const unlikeStringify = JSON.stringify(unlike)
+    if (post.usersLiked.find(user => user === userId)) {
+        await fetch(`http://localhost:3001/api/posts/${id}/like`, {
+          method: 'post',
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type":"application/json",
+            "Accept":'application/json'
+          },
+          body: unlikeStringify
+        })
+        .then(response => response.json()) 
+        .catch(error => console.error({ message: 'erreur' } )) 
+        .then(data => console.log(data))
+        window.location.reload() 
+    } else {
+        await fetch(`http://localhost:3001/api/posts/${id}/like`, {
+          method: 'post',
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type":"application/json",
+            "Accept":'application/json'
+          },
+          body: likeStringify
+        })
+        .then(response => response.json()) 
+        .catch(error => console.error({ message: 'erreur' } )) 
+        .then(data => console.log(data))
+        window.location.reload() 
+    }   
+  }
 
   return (
     <>
@@ -34,7 +76,6 @@ const PostItem = (props) => {
                         <NavItem>
                             <DropdownMenu 
                                 post={post} 
-                                // myFunc={myFunc}
                             />
                         </NavItem>
                     </Navbar>
@@ -48,7 +89,7 @@ const PostItem = (props) => {
                 <div className="vitrine__bloc__cart__img"><img className="isereImage" src={post.imageUrl} alt="" /></div>
                 <div className="vitrine__bloc__cart__like">
                     <div className="vitrine__bloc__cart__like__center">
-                    <div className="wrapper">
+                    <div className="wrapper" onClick={handleClickSubmitLike}>
                         <i className="far fa-heart base-icon"></i>
                         <i className="fas fa-heart color-icon"></i>
                     </div>
