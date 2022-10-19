@@ -7,7 +7,7 @@ import DropdownMenu from '../../modules/Drop/DropdownMenu';
 
 // ! TODO simplify this and split it into multiple components/modules
 // TODO DropdownMenu should be dumb
-
+const user = JSON.parse(localStorage.getItem("user"));
 
 const PostItem = (props) => {
 
@@ -25,6 +25,10 @@ const PostItem = (props) => {
                     <div className="vitrine__bloc__cart__post__logo">
                     <div className="placement">
                         <img src={logoPost} alt="Logo de groupomania(planete fait de trait blanc)"/>
+                        <div className='bloc-date-username'>
+                            <div className='username'>{user.userName}</div>
+                            <div className='date'>{post.date}</div>
+                        </div>
                     </div>
                     <Navbar>
                         <NavItem>

@@ -592,10 +592,24 @@ html {
 .blocPostList .vitrine__bloc__cart__post__logo .placement {
   display: flex;
   align-items: center;
-  width: 40px;
 }
 .blocPostList .vitrine__bloc__cart__post__logo .placement img {
   width: 40px;
+}
+.blocPostList .vitrine__bloc__cart__post__logo .placement .bloc-date-username {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  color: white;
+}
+.blocPostList .vitrine__bloc__cart__post__logo .placement .bloc-date-username .username {
+  font-size: 18px;
+}
+.blocPostList .vitrine__bloc__cart__post__logo .placement .bloc-date-username .date {
+  font-size: 14px;
+  opacity: 1;
+  visibility: visible;
+  color: #d0cdcd;
 }
 .blocPostList .vitrine__bloc__cart__post__logo .navbar {
   height: var(--nav-size);
@@ -644,11 +658,12 @@ html {
   align-items: center;
   position: relative;
   width: auto;
-  padding-left: 15px;
+  z-index: 1;
   margin-top: 10px;
   border: var(--border);
   border-radius: var(--border-radius);
   box-shadow: 5px 5px 10px 2px var(--colour-primary);
+  padding-left: 15px;
   overflow: hidden;
   background-color: var(--colour-secondary);
   transform: translateX(-45%);
@@ -668,6 +683,7 @@ html {
   color: var(--colour-texte);
   font-size: 17px;
   transition: background var(--speed);
+  cursor: pointer;
 }
 .blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu .menu-item .icon-right {
   margin-left: auto;
@@ -680,6 +696,7 @@ html {
   background-color: var(--colour-secondary);
   color: var(--colour-texte);
   font-size: 17px;
+  cursor: pointer;
 }
 .blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier {
   display: flex;
@@ -704,8 +721,11 @@ html {
 .blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier .menu-item .icon-button {
   margin-right: 0.5rem;
 }
-.blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier .menu-item .icon-button:hover {
+.blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier .menu-item .icon-button :hover {
   filter: none;
+}
+.blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier .menu-item .retour {
+  cursor: pointer;
 }
 .blocPostList .vitrine__bloc__cart__post__logo .navbar .navbar_nav .nav-item .dropdown .menu-modifier .bloc-input {
   display: flex;

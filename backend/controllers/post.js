@@ -11,12 +11,19 @@ const Post = require('../models/Post');
  */
 
 exports.createPost = (req, res, next) => {
+    var now = new Date();
+    var annee = now.getFullYear();
+    var mois = now.getMonth() + 1;
+    var jour = now.getDate();
+    var heure = now.getHours();
+    var minute = now.getMinutes();
     const postObject = req.body;
     if (req.file == undefined && postObject.publication == "") {
       return res.status(400).json({ message: "Votre post doit minimum contenir une publication ou une photo"})
     } else if (req.file == undefined) {
       const post = new Post({
         ...postObject,
+        date: `${jour}/${mois}/${annee} à ${heure}h${minute}.`
       });
       post.save()
       .then(() => { res.status(201).json({ post })})
@@ -24,8 +31,8 @@ exports.createPost = (req, res, next) => {
     } else {
       const post = new Post({
         ...postObject,
-        imageUrl: `${req.protocol}://${process.env.HOSTNAME}/images/${req.file.filename}`
-        
+        imageUrl: `${req.protocol}://${process.env.HOSTNAME}/images/${req.file.filename}`,
+        date: `${jour}/${mois}/${annee} à ${heure}h${minute}.`
       });
       post.save()
       .then(() => { res.status(201).json({ post })})

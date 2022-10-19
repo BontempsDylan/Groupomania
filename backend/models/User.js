@@ -7,7 +7,8 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 // model of sauces.
 const userSchema = mongoose.Schema({
-    name: { type: String, required: true},
+    nom: { type: String, required: true},
+    prenom: { type: String, required: true},
     email: { type: String, required: true, unique: false},
     password: { type: String, required: true}
 });

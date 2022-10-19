@@ -291,10 +291,24 @@ html {
                         .placement{
                             display: flex;
                             align-items: center;
-                            width: 40px;
                             img{
                                 width: 40px;
-                            }                             
+                            } 
+                            .bloc-date-username {
+                                display: flex;
+                                flex-direction: column;
+                                padding-left: 10px;
+                                color: white;
+                                .username{
+                                    font-size: 18px;
+                                }
+                                .date {
+                                    font-size: 14px;
+                                    opacity: 1;
+						            visibility: visible;
+                                    color: #d0cdcd;
+                                }
+                            }                            
                         }
                         /* Top Navigation Bar */
                         /* <nav> */
@@ -342,11 +356,12 @@ html {
                                         align-items: center;
                                         position: relative;
                                         width: auto;
-                                        padding-left: 15px;
+                                        z-index: 1;
                                         margin-top: 10px;
                                         border: var(--border);
                                         border-radius: var(--border-radius);
                                         box-shadow: 5px 5px 10px 2px var(--colour-primary);
+                                        padding-left: 15px;
                                         overflow: hidden;
                                         background-color: var(--colour-secondary);
                                         transform: translateX(-45%);
@@ -364,6 +379,7 @@ html {
                                                 color: var(--colour-texte);
                                                 font-size: 17px;
                                                 transition: background var(--speed);
+                                                cursor: pointer;
                                                 .icon-right {
                                                     margin-left: auto;
                                                 }
@@ -375,6 +391,7 @@ html {
                                                     background-color: var(--colour-secondary);
                                                     color: var(--colour-texte);
                                                     font-size: 17px;
+                                                    cursor: pointer;
                                                 }
                                             }
                                         }
@@ -396,12 +413,15 @@ html {
                                                 .icon-right {
                                                     margin-left: auto;
                                                 }
-                                            }
-                                            .menu-item .icon-button {
-                                                margin-right: 0.5rem;
-                                            }
-                                            .menu-item .icon-button:hover {
-                                                filter: none;
+                                                .icon-button {
+                                                    margin-right: 0.5rem;
+                                                    :hover {
+                                                        filter: none;
+                                                    }
+                                                }
+                                                .retour {
+                                                    cursor: pointer;
+                                                }
                                             }
                                             .bloc-input {
                                                 display: flex;

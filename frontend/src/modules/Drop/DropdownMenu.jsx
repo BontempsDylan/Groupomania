@@ -110,13 +110,13 @@ function DropdownMenu(props) {
           onEnter={calcHeight}>
           <div className='menu-modifier'>
             <DropdownItem goToMenu="main" leftIcon={<Retour />}>
-              <h2>Retour</h2>
+              <h2 className='retour'>Retour</h2>
             </DropdownItem>
             <div className='bloc-input'>
               <textarea type="text" className='input-post' placeholder={post.publication}  value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
               <div className='conteneur-input'>
-                <label for="input-file"><i className="fas fa-images" /></label>
-                <input type="file" accept="image/*" className='input-file' onChange={(e) => {
+                <label for="file"><i className="fas fa-images" /></label>
+                <input type="file" accept="image/*" className='input-file' id='file' onChange={(e) => {
                   if (e.target.files.length > 0) {
                     setFile(e.target.files[0]);
                   }

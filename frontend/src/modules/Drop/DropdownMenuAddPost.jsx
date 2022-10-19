@@ -22,8 +22,6 @@ function DropdownMenuAddPost(props) {
         formData.append("post", dataPost);
         formData.append("image", file);
         
-        
-        
         await fetch(`http://localhost:3001/api/posts`, {
           method: 'PosT',
           headers: {

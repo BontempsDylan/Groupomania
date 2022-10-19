@@ -14,6 +14,7 @@ const postSchema = mongoose.Schema({
     maxLength: [250, 'Le nom de votre fichier est trop long réduisez le.'], 
     required: false 
   },
+  date: { type: String, required: false },
   likes: { type: Number, required: false, default:0},
   usersLiked: { type: [String], required: false}, 
 });

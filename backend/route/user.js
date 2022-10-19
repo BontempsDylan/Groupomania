@@ -13,9 +13,13 @@ const router = express.Router();
 
 router.post(
     '/signup', 
-    body('name')
+    body('nom')
         .not().isEmpty()
         .withMessage("Vous devez rentrer votre nom")
+        .escape(),
+    body('prenom')
+        .not().isEmpty()
+        .withMessage("Vous devez rentrer votre prenom")
         .escape(),
     body('password')
         .isLength({ min: 5, max: 20 })

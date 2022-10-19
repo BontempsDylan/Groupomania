@@ -6,6 +6,7 @@ const {sendServerErrorResponse, sendUnauthorizedResponse} = require("./../error-
 
 const createJwtResponse = (user) => {
     return {
+        userName: user.nom+" "+ user.prenom,
         userId: user._id,
         token: jwt.sign(
             { userId: user._id, isAdmin: user.isAdmin, username: user.name},
@@ -22,7 +23,8 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-                name: req.body.name,
+                nom: req.body.nom,
+                prenom: req.body.prenom,
                 email: req.body.email,
                 password: hash
             });
