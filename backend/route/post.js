@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 // import multer for image's gestion.
 const multer = require('../middleware/multer-config');
 // import express-validator for validate all writing fields.
-const { body, check } = require('express-validator');
+const { body } = require('express-validator');
 const { finalValidation } = require('../middleware/final-validation')
 
 const router = express.Router();

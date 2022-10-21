@@ -68,7 +68,7 @@ const PostItem = (props) => {
                     <div className="placement">
                         <img src={logoPost} alt="Logo de groupomania(planete fait de trait blanc)"/>
                         <div className='bloc-date-username'>
-                            <div className='username'>{user.userName}</div>
+                            <div className='username'>{post.userName}</div>
                             <div className='date'>{post.date}</div>
                         </div>
                     </div>

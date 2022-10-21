@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, { useState } from 'react'
 import { CSSTransition } from 'react-transition-group';
 
 import { ReactComponent as Supprimer } from '../../assets/supprimer.svg';
@@ -7,89 +7,74 @@ import { ReactComponent as Retour } from '../../assets/retour.svg';
 
 function DropdownMenu(props) {
 
-    const {post} = props;
+  const {post} = props;
 
-    const [ activeMenu, setActiveMenu ] = useState('main');
-    const [ menuHeight, setMenuHeight ] = useState(null);
-    const [ publication, setPublication ]  = useState("");
-    const [ file, setFile ]  = useState(null);
-    const dropdownRef = useRef(null);
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token
-    const id = post._id
-    const combined = {
-      publication: publication,
-      userId: user.userId
-    }
-    const dataPost = JSON.stringify(combined)
+  const [ activeMenu, setActiveMenu ] = useState('main');
+  const [ publication, setPublication ]  = useState("");
+  const [ file, setFile ]  = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user.token
+  const id = post._id
+  const combined = {
+    publication: publication,
+    userId: user.userId
+  }
+  const dataPost = JSON.stringify(combined)
+  
+
+  async function handleSubmitPutRequest() {
+
+    const formData = new FormData();
+    formData.append("post", dataPost);
+    formData.append("image", file);
     
-
-    async function handleSubmitPutRequest() {
-
-      const formData = new FormData();
-      formData.append("post", dataPost);
-      formData.append("image", file);
-      
-      
-      
-      await fetch(`http://localhost:3001/api/posts/${id}`, {
-        method: 'PUT',
+    
+    
+    await fetch(`http://localhost:3001/api/posts/${id}`, {
+      method: 'PUT',
+      headers: {
+        "Authorization": "Bearer " + token,
+      },
+      body: formData
+    })
+    .then(response => response.json()) 
+    .catch(error => console.error({ message: 'erreur' } )) 
+    .then(data => console.log(data))
+    /* window.location.reload() */   
+  }
+  
+  async function handleSubmitDelRequest() {
+    await fetch(`http://localhost:3001/api/posts/${id}`, {
+        method: 'DELETE',
         headers: {
           "Authorization": "Bearer " + token,
+          "Content-Type":"application/json",
+          "Accept":'application/json'
         },
-        body: formData
       })
       .then(response => response.json()) 
       .catch(error => console.error({ message: 'erreur' } )) 
       .then(data => console.log(data))
-      window.location.reload()   
-    }
-    
-    async function handleSubmitDelRequest() {
-      await fetch(`http://localhost:3001/api/posts/${id}`, {
-          method: 'DELETE',
-          headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type":"application/json",
-            "Accept":'application/json'
-          },
-        })
-        .then(response => response.json()) 
-        .catch(error => console.error({ message: 'erreur' } )) 
-        .then(data => console.log(data))
-        window.location.reload()
-    }
+      window.location.reload()
+  }
 
-    
-
-
-    useEffect(() => {
-      setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
-    }, [])
-
-    function calcHeight(el) {
-      const height = el.offsetHeight;
-      setMenuHeight(height);
-    }
-
-    function DropdownItem(props) {
-      return (
-        <button className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
-          <span className="icon-button">{props.leftIcon}</span>
-          {props.children}
-          <span className="icon-right">{props.rightIcon}</span>
-        </button>
-      )
-    }
-
+  function DropdownItem(props) {
     return (
-      <div className='dropdown' ref={ dropdownRef }>
+      <button className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+        <span className="icon-button">{props.leftIcon}</span>
+        {props.children}
+        <span className="icon-right">{props.rightIcon}</span>
+      </button>
+    )
+  }
+  if (user.userId === post.userId) {
+    return (
+      <div className='dropdown' >
         <CSSTransition
           in={activeMenu === 'main'}
           timeout={500}
           classNames="menu-primary"
-          unmountOnExit
-          onEnter={calcHeight}>
+          unmountOnExit>
           <div className='menu'>
             <DropdownItem leftIcon={<Supprimer />}><button className='delete-post' onClick={handleSubmitDelRequest}>Supprimer</button></DropdownItem>
             <DropdownItem 
@@ -106,8 +91,7 @@ function DropdownMenu(props) {
           in={activeMenu === "modifier"}
           timeout={500}
           classNames="menu-secondary"
-          unmountOnExit
-          onEnter={calcHeight}>
+          unmountOnExit>
           <div className='menu-modifier'>
             <DropdownItem goToMenu="main" leftIcon={<Retour />}>
               <h2 className='retour'>Retour</h2>
@@ -131,6 +115,7 @@ function DropdownMenu(props) {
         </CSSTransition>
       </div>
     )
+  }
 }
 
 export default DropdownMenu;

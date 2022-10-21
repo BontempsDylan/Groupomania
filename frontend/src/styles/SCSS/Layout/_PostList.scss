@@ -18,7 +18,6 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-     
     width: 100%; 
     background: var(--colour-primary);
     .bloc_image{
@@ -72,7 +71,7 @@ html {
         margin-bottom: 30px;
         width: 90%;
         height: 220px;
-        max-height: 230px;
+        max-height: 200px;
         border-radius: 10px;
         background: var(--colour-secondary);
         .navBar-nav-addPost {

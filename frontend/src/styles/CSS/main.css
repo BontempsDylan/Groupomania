@@ -376,7 +376,7 @@ html {
   margin-bottom: 30px;
   width: 90%;
   height: 220px;
-  max-height: 230px;
+  max-height: 200px;
   border-radius: 10px;
   background: var(--colour-secondary);
 }

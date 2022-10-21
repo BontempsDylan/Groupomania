@@ -6,7 +6,6 @@ const {sendServerErrorResponse, sendUnauthorizedResponse} = require("./../error-
 
 const createJwtResponse = (user) => {
     return {
-        userName: user.nom+" "+ user.prenom,
         userId: user._id,
         token: jwt.sign(
             { userId: user._id, isAdmin: user.isAdmin, username: user.name},
@@ -70,3 +69,22 @@ exports.login = async (req, res, next) => {
         sendServerErrorResponse(res);
     }
 };
+
+exports.getAllUser = (req, res, next) => {
+    User.find()
+      .then((users) => res.status(200).json(users))
+      .catch(error => res.status(400).json({ error }));
+}
+
+exports.getOneUser = (req, res, next) => {
+    User.findOne({ _id: req.params.id })
+    .then((user) =>{ 
+      if (user) {
+        User.findOne({ _id: req.params.id })
+          .then((user) => res.status(200).json(user))
+          .catch(error => res.status(404).json({ error }));
+      } else {
+        return res.status(404).json({ message: "Cette utilisateur n'éxiste pas." })
+      }
+    })    
+  }

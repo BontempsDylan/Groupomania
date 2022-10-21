@@ -1,20 +1,34 @@
-import React, {useState, useRef, /* useEffect */} from 'react'
+import React, { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group';
 
 import { ReactComponent as Retour } from '../../assets/retour.svg';
 
 function DropdownMenuAddPost(props) {
     const [ activeMenu, setActiveMenu ] = useState('main');
-    const dropdownRef = useRef(null);
     const [ publication, setPublication ]  = useState("");
+    const [ user, setUser ] = useState([]);
     const [ file, setFile ]  = useState(null);
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user.token
+    const userLocalStorage = JSON.parse(localStorage.getItem("user"));
+    const id = userLocalStorage.userId
+    const token = userLocalStorage.token
     const combined = {
       publication: publication,
-      userId: user.userId
+      userId: userLocalStorage.userId,
+      userName:  user.nom+" "+ user.prenom
     }
     const dataPost = JSON.stringify(combined)
+
+    useEffect(() => {
+        fetch(`http://localhost:3001/api/auth/users/${id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                setUser(result);
+                },
+            )
+    },[])
+
+    
 
     async function handleSubmitPosttRequest() {
 
@@ -23,7 +37,7 @@ function DropdownMenuAddPost(props) {
         formData.append("image", file);
         
         await fetch(`http://localhost:3001/api/posts`, {
-          method: 'PosT',
+          method: 'POST',
           headers: {
             "Authorization": "Bearer " + token,
           },
@@ -32,7 +46,8 @@ function DropdownMenuAddPost(props) {
         .then(response => response.json()) 
         .catch(error => console.error({ message: 'erreur' } )) 
         .then(data => console.log(data))
-        window.location.reload()   
+        window.location.reload()  
+        
     }
 
     function DropdownItemAddPost(props) {
@@ -44,9 +59,9 @@ function DropdownMenuAddPost(props) {
         </button>
         )
     }
-
+    
     return (
-        <div className='dropdownAddPost'  ref={ dropdownRef }>
+        <div className='dropdownAddPost'>
             <CSSTransition
                 in={activeMenu === 'main'}
                 timeout={500}
@@ -75,6 +90,6 @@ function DropdownMenuAddPost(props) {
                 </div> 
             </CSSTransition>
         </div>
-    )
+    )   
 }
 export default DropdownMenuAddPost;

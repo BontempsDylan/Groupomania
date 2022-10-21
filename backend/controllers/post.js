@@ -50,14 +50,23 @@ exports.modifyPost = (req, res, next) => {
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body }
 
+    
     delete postObject._userId
     Post.findOne({ _id: req.params.id })
+    
       .then((post) => {
+        if (req.body.userId === post.userId) {
           Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id})
           .then(() => res.status(200).json({message: 'Publication modifié!'}))
-          .catch(error => res.status(401).json({ error }));       
+          .catch(error => res.status(401).json({ error })); 
+        } else {
+          console.log(req.body.userId);
+          console.log(post.userId);
+          return res.status(404).json({ message: "Vous n'êtes pas autorisé a supprimer une publication qui n'est pas de vous." })
+        }      
       })
       .catch(error => res.status(400).json({ error }));
+    
 }
 
 /*
@@ -72,12 +81,12 @@ exports.deletePost = async (req, res, next) => {
   if (post.imageUrl && fs.existsSync(`./images/${post.imageUrl.split('/images/')[1]}`)) {
     fs.unlinkSync(`./images/${post.imageUrl.split('/images/')[1]}`);
   }
-  try {
-    await Post.deleteOne({_id: req.params.id});
-    res.status(200).json({message: 'Publication supprimé !'});
-  } catch (error) {
-    res.status(401).json({ error })
-  }
+    try {
+      await Post.deleteOne({_id: req.params.id});
+      res.status(200).json({message: 'Publication supprimé !'});
+    } catch (error) {
+      res.status(401).json({ error })
+    }
 };
 
 /*
@@ -85,19 +94,18 @@ exports.deletePost = async (req, res, next) => {
  */
 
 exports.getOnePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-    .then((post) =>{
-      if (post === null) {
-        return res.status(404).json({ message: "Cette publication n'éxiste pas." })
-      } else {
-        Post.findOne({ _id: req.params.id })
-          .then((post) => res.status(200).json(post))
-          .catch(error => res.status(404).json({ error }));
-      }
-    })
-      
-    
-      
+  Post.findOne({ _id: req.params.id })
+  .then((post) =>{ 
+    if (post) {
+      Post.findOne({ _id: req.params.id })
+        .then((post) => res.status(200).json(post))
+        .catch(error => res.status(404).json({ error }));
+    } else if (error) {
+      return res.status(404).json({ message: "Cette publication n'éxiste pas." })
+    } else {
+      return res.status(404).json({ message: "Cette publication n'éxiste pas." })
+    }
+  })    
 }
 
 /*

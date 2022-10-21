@@ -61,6 +61,8 @@ router.post(
     body('email').isEmail(),
     finalValidation,
     userCtrl.login
-    );
+);
+router.get('/users',userCtrl.getAllUser)
+router.get('/users/:id',userCtrl.getOneUser)
 
 module.exports = router;
