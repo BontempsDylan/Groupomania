@@ -11,19 +11,14 @@ const Post = require('../models/Post');
  */
 
 exports.createPost = (req, res, next) => {
-    var now = new Date();
-    var annee = now.getFullYear();
-    var mois = now.getMonth() + 1;
-    var jour = now.getDate();
-    var heure = now.getHours();
-    var minute = now.getMinutes();
+    const now = new Date();
     const postObject = req.body;
     if (req.file == undefined && postObject.publication == "") {
       return res.status(400).json({ message: "Votre post doit minimum contenir une publication ou une photo"})
     } else if (req.file == undefined) {
       const post = new Post({
         ...postObject,
-        date: `${jour}/${mois}/${annee} à ${heure}h${minute}.`
+        date: now
       });
       post.save()
       .then(() => { res.status(201).json({ post })})
@@ -32,7 +27,7 @@ exports.createPost = (req, res, next) => {
       const post = new Post({
         ...postObject,
         imageUrl: `${req.protocol}://${process.env.HOSTNAME}/images/${req.file.filename}`,
-        date: `${jour}/${mois}/${annee} à ${heure}h${minute}.`
+        date: now
       });
       post.save()
       .then(() => { res.status(201).json({ post })})
@@ -45,23 +40,20 @@ exports.createPost = (req, res, next) => {
  */
 
 exports.modifyPost = (req, res, next) => {
+    const postPayload = req.body.post ? req.body.post : req.body;
     const postObject = req.file ? {
-      ...json(req.body.post),
+      ...postPayload,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body }
-
+    } : { ...postPayload }
     
     delete postObject._userId
     Post.findOne({ _id: req.params.id })
-    
       .then((post) => {
-        if (req.body.userId === post.userId) {
+        if (postPayload.userId == post.userId) {
           Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id})
           .then(() => res.status(200).json({message: 'Publication modifié!'}))
           .catch(error => res.status(401).json({ error })); 
         } else {
-          console.log(req.body.userId);
-          console.log(post.userId);
           return res.status(404).json({ message: "Vous n'êtes pas autorisé a supprimer une publication qui n'est pas de vous." })
         }      
       })
@@ -168,3 +160,4 @@ exports.likePost = (req, res, next) => {
       return res.status(404).json({ message: "Mauvaise requete."});
   }
 };
+

@@ -9,7 +9,7 @@ function PostList() {
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [posts, setposts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const token = user ? user.token : false;
 
@@ -34,7 +34,11 @@ function PostList() {
       .then(
         (result) => {
           setIsLoaded(true);
-          setposts(result);
+          const sorted = result.map(post => {
+            post.date = new Date(post.date);
+            return post;
+          }).sort((post1, post2) => post2.date - post1.date);
+          setPosts(sorted);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow

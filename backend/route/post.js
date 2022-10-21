@@ -35,11 +35,15 @@ router.post(
     post.createPost
     );
 router.put(
-    '/:id', 
+    '/:id',
     auth, 
     multer, 
     (req, res, next) => {
-        req.body = JSON.parse(req.body.post);
+        try {
+            req.body = JSON.parse(req.body.post);
+        } catch (error) {
+            console.info(req.body);
+        }
         next();
     },
     body('publication')
