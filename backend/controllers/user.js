@@ -1,19 +1,34 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+
 const User = require('../models/User');
 const {sendServerErrorResponse, sendUnauthorizedResponse} = require("./../error-handlers");
+
 
 const createJwtResponse = (user) => {
     return {
         userId: user._id,
         token: jwt.sign(
-            { userId: user._id, isAdmin: user.isAdmin, username: user.name},
+            { userId: user._id, isAdmin: user.isAdmin},
             process.env.SECRET_TOKEN,
-            { expiresIn: '24h'}
+            { expiresIn: '1800s'}
         )
     };
 };
+
+const createRefreshJwtResponse = (user) => {
+    return {
+        userId: user._id,
+        token: jwt.sign(
+            { userId: user._id, isAdmin: user.isAdmin},
+            process.env.REFRESH_TOKEN,
+            { expiresIn: '1y'}
+        )
+    };
+};
+
+
 
 /*
 * Objectif => Create account. 
@@ -27,9 +42,14 @@ exports.signup = (req, res, next) => {
                 email: req.body.email,
                 password: hash
             });
+            const accessToken = createJwtResponse(user);
+            const refreshToken = createRefreshJwtResponse(user);
             user.save()
                 .then(() => {
-                    res.status(200).json(createJwtResponse(user));
+                    res.send({
+                        accessToken,
+                        refreshToken
+                    });
                 })
                 .catch(error => res.status(400).json({ error }));
                  
@@ -61,7 +81,12 @@ exports.login = async (req, res, next) => {
         if(!passwordComparisonIsValid) {
             sendUnauthorizedResponse(res);
         } else {
-            res.status(200).json(createJwtResponse(user));
+            const accessToken = createJwtResponse(user);
+            const refreshToken = createRefreshJwtResponse(user);
+            res.send({
+                accessToken,
+                refreshToken
+            });
         }
     } catch(error) {
         console.error(error);
@@ -88,3 +113,23 @@ exports.getOneUser = (req, res, next) => {
       }
     })    
   }
+
+exports.userRefreshToken = (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) {
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) => {
+        if (err) {
+            return res.sendStatus(401)
+        }
+        delete user.iat;
+        delete user.exp;
+        const refreshedToken = createRefreshJwtResponse(user);
+        res.send({
+            accessToken: refreshedToken,
+        });
+    });
+}

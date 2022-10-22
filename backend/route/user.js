@@ -1,9 +1,13 @@
 const express = require('express');
 // import express-validator for validate all writing fields.
+require('dotenv').config();
+const jwt = require('jsonwebtoken')
+const { JsonWebTokenError } = require('jsonwebtoken');
+
 const { body } = require('express-validator');
 const { finalValidation } = require('../middleware/final-validation')
-
 const userCtrl = require('../controllers/user');
+
 
 const router = express.Router();
 
@@ -62,6 +66,7 @@ router.post(
     finalValidation,
     userCtrl.login
 );
+router.post('/refreshToken', userCtrl.userRefreshToken);
 router.get('/users',userCtrl.getAllUser)
 router.get('/users/:id',userCtrl.getOneUser)
 
