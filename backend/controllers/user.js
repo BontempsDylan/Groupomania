@@ -10,9 +10,9 @@ const createJwtResponse = (user) => {
     return {
         userId: user._id,
         token: jwt.sign(
-            { userId: user._id, isAdmin: user.isAdmin},
+            { userId: user._id, isAdmin: user.admin},
             process.env.SECRET_TOKEN,
-            { expiresIn: '20s'}
+            { expiresIn: '1800s'}
         )
     };
 };
@@ -125,7 +125,6 @@ exports.userRefreshToken = (req, res) => {
         if (err) {
             return res.sendStatus(401)
         }
-        console.log(user.userId);
         delete user.iat;
         delete user.exp;
         res.send({

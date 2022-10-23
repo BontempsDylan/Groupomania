@@ -9,13 +9,11 @@ const { sendServerErrorResponse, sendUnauthorizedResponse } = require('../error-
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
-    const refreshToken = req.headers.authorization.split(' ')[1];
     // verify the token
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
     const userId = decodedToken.userId;
     const isAdmin = decodedToken.isAdmin;
-    if ((req.body.userId && req.body.userId !== userId) && !isAdmin) {
-      
+    if ((req.body.userId && req.body.userId !== userId) && isAdmin !== true) {
       throw 'Invalid user ID';
     } else {
       next();

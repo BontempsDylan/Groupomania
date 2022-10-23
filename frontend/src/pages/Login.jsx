@@ -23,7 +23,6 @@ export default function Login() {
     await axios.post('/auth/login', {
       email, password
     }).then((response) => {
-      console.log(response);
       if (response === undefined) {
         alert("Adresse email ou mot de passe incorect");
       } 

@@ -11,6 +11,8 @@ function PostList() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
+  
+  const userId = JSON.parse(localStorage.getItem("userId"))
   const localStorageData = JSON.parse(localStorage.getItem("user"));
   const dataStorageAccessToken = localStorageData ? localStorageData.accessToken : false;
   const dataStorageRefreshToken = localStorageData.refreshToken ? localStorageData.refreshToken : false;
@@ -19,7 +21,15 @@ function PostList() {
   
   const navigate = useNavigate();
 
-  /* console.log(refreshedToken); */
+  useEffect(() => {
+    axios.get(`/auth/users/${userId}`)
+        .then(
+            (result) => {
+              localStorage.setItem("admin", JSON.stringify(result.data.admin));
+            },
+        )   
+  },[])
+
   // Note: the empty deps array [] means
   // this useEffect will run once
   // similar to componentDidMount()
@@ -63,8 +73,6 @@ function PostList() {
           console.log('refresh token');
           await axios.post("/auth/refreshToken").then((response) => {
             const accessTokenRefreshed = response.data
-            console.log(accessTokenRefreshed);
-            console.log(response);
             localStorage.setItem("user", JSON.stringify(accessTokenRefreshed));
             window.location.reload()
           }).catch((error) => {

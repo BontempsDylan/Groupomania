@@ -19,7 +19,6 @@ const ModuleLike = (props) => {
         const id = post._id
 
         if (post.usersLiked.find(user => user == userId)) {
-            console.log('je suis la');
             await axios.post(`/posts/${id}/like`, {
                 like: 0, userId
             })
@@ -29,7 +28,6 @@ const ModuleLike = (props) => {
             axios.defaults.headers.common['Authorization'] = `bearer ${token}` 
             window.location.reload()     
         } else {
-            console.log('ou bien la');
             await axios.post(`/posts/${id}/like`, {
                 like: 1, userId: userId
             })
