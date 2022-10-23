@@ -52,7 +52,7 @@ export default function Signup() {
             </div>
             <div className="login slide-up">
             <div className="center">
-                <Link to="/Login" className="form-title"><span>ou</span>Connectez-vous</Link>
+                <Link to="/" className="form-title"><span>ou</span>Connectez-vous</Link>
             </div>
             </div>
         </div>

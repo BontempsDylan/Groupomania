@@ -12,9 +12,8 @@ function PostList() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
   const localStorageData = JSON.parse(localStorage.getItem("user"));
-  const user = localStorageData.accessToken
-  const token = user ? user.token : false;
-
+  const user = localStorageData ? localStorageData.accessToken : false;
+  const token = localStorageData ? user.token : false;
   const navigate = useNavigate();
 
   // Note: the empty deps array [] means
@@ -24,7 +23,7 @@ function PostList() {
     
     if (!token) {
       localStorage.removeItem("user");
-      navigate("/login");
+      navigate("/");
     } else {
       axios.get("/posts", axios.defaults.headers.common['Authorization'] = `bearer ${token}`)
       .then(

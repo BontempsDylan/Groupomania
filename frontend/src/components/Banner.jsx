@@ -10,7 +10,7 @@ function Banner() {
 
   async function handleClick() {
     localStorage.clear()
-    navigate("/Login")
+    navigate("/")
   }
 
   return (
