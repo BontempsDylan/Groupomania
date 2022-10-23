@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from '../../Api/axios';
+import axios from '../../Interceptors/axios';
 
 const BlocInput = () => {
     const [ publication, setPublication ]  = useState("");

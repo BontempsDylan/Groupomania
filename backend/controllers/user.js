@@ -12,7 +12,7 @@ const createJwtResponse = (user) => {
         token: jwt.sign(
             { userId: user._id, isAdmin: user.isAdmin},
             process.env.SECRET_TOKEN,
-            { expiresIn: '1800s'}
+            { expiresIn: '40s'}
         )
     };
 };
@@ -127,9 +127,9 @@ exports.userRefreshToken = (req, res) => {
         }
         delete user.iat;
         delete user.exp;
-        const refreshedToken = createRefreshJwtResponse(user);
+        const accessToken = createRefreshJwtResponse(user);
         res.send({
-            accessToken: refreshedToken,
+            accessToken
         });
     });
 }

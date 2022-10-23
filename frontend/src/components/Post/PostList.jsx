@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from '../../Api/axios';
+import axios from '../../Interceptors/axios';
 import background from '../../assets/73-1024x512_texte3.jpg';
 import AddPost from './AddPost';
 import PostItem from './PostItem';
@@ -12,23 +12,28 @@ function PostList() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
   const localStorageData = JSON.parse(localStorage.getItem("user"));
-  const user = localStorageData ? localStorageData.accessToken : false;
-  const token = localStorageData ? user.token : false;
+  const dataStorageAccessToken = localStorageData ? localStorageData.accessToken : false;
+  const dataStorageRefreshToken = localStorageData.refreshToken ? localStorageData.refreshToken : false;
+  const accessToken = localStorageData ? dataStorageAccessToken.token : false;
+  const refreshToken = localStorageData.refreshToken ? dataStorageRefreshToken.token : false;
+  
   const navigate = useNavigate();
 
+  /* console.log(refreshedToken); */
   // Note: the empty deps array [] means
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
     
-    if (!token) {
+    if(!accessToken) {
       localStorage.removeItem("user");
       navigate("/");
     } else {
-      axios.get("/posts", axios.defaults.headers.common['Authorization'] = `bearer ${token}`)
+      axios.get("/posts", 
+        axios.defaults.headers.common['Authorization'] = `bearer ${accessToken}`,
+        )
       .then(
         (result) => {
-          console.log(result);
           setIsLoaded(true);
           const resultPost = result.data
           const sorted = resultPost.map(post => {
@@ -43,9 +48,29 @@ function PostList() {
         (error) => {
           setIsLoaded(true);
           setError(error);
+          return error
         }
       ); 
     }
+    axios.interceptors.response.use((response) => {
+      return response;
+    }, async (error) => {
+      const originalRequest = error.config;
+      if (error.config.url != '/auth/refreshToken' && error.response.status === 401 && originalRequest._retry !== true) {
+        originalRequest._retry = true;
+        if (refreshToken && refreshToken !== '') {
+          axios.defaults.headers.common['Authorization'] = `bearer ${refreshToken}`
+          console.log('refresh token');
+          await axios.post("/auth/refreshToken").then((response) => {
+            const accessTokenRefreshed = response.data
+            localStorage.setItem("user", JSON.stringify(accessTokenRefreshed));
+            window.location.reload()
+          }).catch((error) => {
+            console.log(error.response.status);
+          });
+        }
+      }
+    });
   }, []);
     
   if (error) {

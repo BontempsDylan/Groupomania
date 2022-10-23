@@ -1,6 +1,6 @@
 import React from 'react'
 
-import axios from '../../Api/axios';
+import axios from '../../Interceptors/axios';
 
 const ButtonDelete = (props) => {
     const {post} = props

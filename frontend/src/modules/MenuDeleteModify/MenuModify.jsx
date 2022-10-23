@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import axios from '../../Api/axios'
+import axios from '../../Interceptors/axios'
 
 const MenuModify = (props) => {
     const {post} = props
