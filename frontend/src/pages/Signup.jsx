@@ -20,18 +20,19 @@ export default function Signup() {
   })
   
   async function handleClick() {
-      console.warn(nom, prenom, email, password);
-      /* let item = {nom, prenom, email, password}; */
-      let APICall = await axios.post('/auth/Signup', {
+      await axios.post('/auth/Signup', {
         nom, prenom, email, password
-      });
-      if (APICall.status === 200) {
-        const result = await APICall.data;
+      }).then((response) => {
+        console.log(response);
+        if (response === undefined) {
+          alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres ");
+        } 
+        const result = response.data;
         localStorage.setItem("user", JSON.stringify(result));
-        navigate("/Post");
-      } else {
-        alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres ");
-      }
+        navigate("/Post"); 
+      }).catch((error) => {
+        console.log(error);
+      })
     }
 
     return (

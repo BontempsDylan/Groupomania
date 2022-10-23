@@ -6,7 +6,6 @@ import axios from '../Interceptors/axios'
 import logo from '../assets/icon-left-font-monochrome-white.png';
 import '../styles/CSS/main.css';
 
-
 export default function Login() {
   const  [email, setEmail]  = useState("");
   const  [password, setPassword]  = useState("");
@@ -21,18 +20,19 @@ export default function Login() {
   })
   
   async function handleClick() {
-    console.warn(email, password);
-   /*  let item = {email, password}; */
-    let APICall = await axios.post('/auth/login', {
+    await axios.post('/auth/login', {
       email, password
-    });
-    if (APICall.status === 200) {
-      const result = await APICall.data;
+    }).then((response) => {
+      console.log(response);
+      if (response === undefined) {
+        alert("Adresse email ou mot de passe incorect");
+      } 
+      const result = response.data;
       localStorage.setItem("user", JSON.stringify(result));
-      navigate("/Post");
-    } else {
-      alert("Adresse email ou mot de passe incorect");
-    }
+      navigate("/Post"); 
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
   return (
