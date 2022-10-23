@@ -1,7 +1,7 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { sendServerErrorResponse, sendUnauthorizedResponse } = require('../error-handlers');
 
+const { sendServerErrorResponse, sendUnauthorizedResponse } = require('../error-handlers');
 /*
 * Objectif => créate the authenticator with the token 
 */
@@ -9,14 +9,13 @@ const { sendServerErrorResponse, sendUnauthorizedResponse } = require('../error-
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
+    const refreshToken = req.headers.authorization.split(' ')[1];
     // verify the token
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
-    const decodedRefreshToken = jwt.verify(token, process.env.REFRESH_TOKEN);
-    const userIdRefreshed = decodedRefreshToken.userId
-    const isAdminRefreshed = decodedRefreshToken.isAdmin
     const userId = decodedToken.userId;
     const isAdmin = decodedToken.isAdmin;
-    if ((req.body.userId && req.body.userId !== userId) && !isAdmin && (req.body.userId && req.body.userId !== userIdRefreshed) && !isAdminRefreshed ) {
+    if ((req.body.userId && req.body.userId !== userId) && !isAdmin) {
+      
       throw 'Invalid user ID';
     } else {
       next();

@@ -6,9 +6,9 @@ const BlocInput = () => {
     const [ publication, setPublication ]  = useState("");
     const [ user, setUser ] = useState([]);
     const [ file, setFile ]  = useState(null);
-    const dataStorage = JSON.parse(localStorage.getItem("user"));
-    const dataStorageAccessToken = dataStorage.accessToken
-    const userId = dataStorageAccessToken.userId
+    const userId = JSON.parse(localStorage.getItem("userId"))
+    const dataStorageUser = JSON.parse(localStorage.getItem("user"));
+    const dataStorageAccessToken = dataStorageUser.accessToken
     const token = dataStorageAccessToken.token
 
     useEffect(() => {

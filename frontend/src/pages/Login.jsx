@@ -28,6 +28,9 @@ export default function Login() {
         alert("Adresse email ou mot de passe incorect");
       } 
       const result = response.data;
+      const dataAccessToken = result.accessToken
+      const dataUserId = dataAccessToken.userId
+      localStorage.setItem("userId", JSON.stringify(dataUserId))
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/Post"); 
     }).catch((error) => {

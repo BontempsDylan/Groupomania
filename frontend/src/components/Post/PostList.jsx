@@ -63,6 +63,8 @@ function PostList() {
           console.log('refresh token');
           await axios.post("/auth/refreshToken").then((response) => {
             const accessTokenRefreshed = response.data
+            console.log(accessTokenRefreshed);
+            console.log(response);
             localStorage.setItem("user", JSON.stringify(accessTokenRefreshed));
             window.location.reload()
           }).catch((error) => {

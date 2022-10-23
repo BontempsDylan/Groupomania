@@ -8,31 +8,35 @@ const ModuleLike = (props) => {
 
     const {post} = props;
 
+    
+
     async function handleClickSubmitLike() {
+        
         const dataStorage = JSON.parse(localStorage.getItem("user"));
         const dataStorageAccessToken = dataStorage.accessToken
-        const token = dataStorageAccessToken.token
         const userId = dataStorageAccessToken.userId
+        const token = dataStorageAccessToken.token
         const id = post._id
-        
-        if (post.usersLiked.find(user => user === userId)) {
+
+        if (post.usersLiked.find(user => user == userId)) {
+            console.log('je suis la');
             await axios.post(`/posts/${id}/like`, {
                 like: 0, userId
             })
-            .then(data => console.log(data))
+            .then((response) => {
+                console.log(response)})
             .catch(error => console.error({ message: 'erreur' } ))
             axios.defaults.headers.common['Authorization'] = `bearer ${token}` 
-            window.location.reload()
-                
+            window.location.reload()     
         } else {
+            console.log('ou bien la');
             await axios.post(`/posts/${id}/like`, {
-                like: 1, userId
+                like: 1, userId: userId
             })
             .then(data => console.log(data))
             .catch(error => console.error({ message: 'erreur' } ))
             axios.defaults.headers.common['Authorization'] = `bearer ${token}` 
-            window.location.reload()
-                
+            window.location.reload()     
         }   
     }
 

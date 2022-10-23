@@ -6,10 +6,10 @@ const MenuModify = (props) => {
     const {post} = props
     const [ publication, setPublication ]  = useState(`${post.publication}`);
     const [ file, setFile ]  = useState(null);
+    const userId = JSON.parse(localStorage.getItem("userId"))
     const dataStorage = JSON.parse(localStorage.getItem("user"));
     const dataStorageAccessToken = dataStorage.accessToken
     const token = dataStorageAccessToken.token
-    const userId = dataStorageAccessToken.userId
     const id = post._id
 
     async function handleSubmitPutRequest() {
