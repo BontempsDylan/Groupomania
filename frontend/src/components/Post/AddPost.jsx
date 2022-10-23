@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import DropdownMenuAddPost from '../../modules/Drop/DropdownMenuAddPost';
+import DropdownMenuAddPost from '../Drop/DropdownMenuAddPost';
 import NavBarAddPost from '../../modules/Nav/NavBarAddPost';
 import NavItemTextAddPost from '../../modules/Nav/NavItemTextAddPost copy';
 import NavItemPhotoAddPost from '../../modules/Nav/NavItemPhotoAddPost'

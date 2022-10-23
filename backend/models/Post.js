@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 // model of sauces.
 const postSchema = mongoose.Schema({
   userId: {type: mongoose.Types.ObjectId, ref: "User"},
-  userName: { type: String, required: true },
+  nom: { type: String, required: true },
+  prenom: { type: String, required: true },
   publication: { type: String, required: false },
   imageUrl: { 
     type: String,

@@ -1,6 +1,8 @@
 import React, {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
+
+import axios from '../Api/axios'
 import logo from '../assets/icon-left-font-monochrome-white.png';
 import '../styles/CSS/main.css';
 
@@ -20,17 +22,12 @@ export default function Login() {
   
   async function handleClick() {
     console.warn(email, password);
-    let item = {email, password};
-    let APICall = await fetch('http://localhost:3001/api/auth/login', {
-      method: 'POST',
-      headers:{
-        "Content-Type":"application/json",
-        "Accept":'application/json'
-      },
-      body: JSON.stringify(item)
+   /*  let item = {email, password}; */
+    let APICall = await axios.post('/auth/login', {
+      email, password
     });
     if (APICall.status === 200) {
-      const result = await APICall.json();
+      const result = await APICall.data;
       localStorage.setItem("user", JSON.stringify(result));
       navigate("/Post");
     } else {

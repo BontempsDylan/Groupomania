@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import axios from '../../Api/axios';
 import background from '../../assets/73-1024x512_texte3.jpg';
 import AddPost from './AddPost';
 import PostItem from './PostItem';
@@ -10,7 +11,8 @@ function PostList() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const localStorageData = JSON.parse(localStorage.getItem("user"));
+  const user = localStorageData.accessToken
   const token = user ? user.token : false;
 
   const navigate = useNavigate();
@@ -24,17 +26,13 @@ function PostList() {
       localStorage.removeItem("user");
       navigate("/login");
     } else {
-      fetch("http://localhost:3001/api/posts", {
-        method: 'GET',
-        headers: {
-          "Authorization": "Bearer " + token,
-        }
-      })
-      .then(res => res.json())
+      axios.get("/posts", axios.defaults.headers.common['Authorization'] = `bearer ${token}`)
       .then(
         (result) => {
+          console.log(result);
           setIsLoaded(true);
-          const sorted = result.map(post => {
+          const resultPost = result.data
+          const sorted = resultPost.map(post => {
             post.date = new Date(post.date);
             return post;
           }).sort((post1, post2) => post2.date - post1.date);
