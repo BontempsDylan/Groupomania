@@ -1,6 +1,6 @@
 1) Une fois le projet récupéré installer tout les node_modules du frontend et backend.
 
-2) Créer une BDD local avec docker.
+2) Créer une BDD sur mongoDB ou en local avec docker.
 
 3) Créer un .env dans le backend en suivant l'exemple du .env.exemple.
 
