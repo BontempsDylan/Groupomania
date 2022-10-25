@@ -4,8 +4,8 @@
 
 3) Créer un .env dans le backend en suivant l'exemple du .env.exemple.
 
-4) Pour lancer le projet faite les commandes suivantes dans le backend nodemon et docker compose up, faite la commande        
-   suivante dans le frontend npm start.
+4) Pour lancer le projet faite les commandes suivantes dans le backend nodemon et docker compose up(si vous avez fait une base de 
+   donnée local avec docker), faite la commande suivante dans le frontend npm start.
 
 5) Une fois le projet lancé inscrivez-vous et vous pourrez accéder a toutes les fonctionnalités du site.
 
