@@ -24,16 +24,20 @@ export default function Login() {
       email, password
     }).then((response) => {
       if (response === undefined) {
-        alert("Adresse email ou mot de passe incorect");
-      } 
-      const result = response.data;
-      const dataAccessToken = result.accessToken
-      const dataUserId = dataAccessToken.userId
-      localStorage.setItem("userId", JSON.stringify(dataUserId))
-      localStorage.setItem("user", JSON.stringify(result));
-      navigate("/Post"); 
+        alert("Mot de passe incorect");
+        localStorage.clear()
+        return
+      } else if (response !== undefined){
+        const result = response.data;
+        const dataAccessToken = result.accessToken
+        const dataUserId = dataAccessToken.userId
+        localStorage.setItem("userId", JSON.stringify(dataUserId))
+        localStorage.setItem("user", JSON.stringify(result));
+        navigate("/Post"); 
+      }
     }).catch((error) => {
       console.log(error);
+      alert("Adresse email incorect");
     })
   }
 

@@ -24,14 +24,15 @@ export default function Signup() {
         nom, prenom, email, password
       }).then((response) => {
         if (response === undefined) {
-          alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres ");
-        } 
-        const result = response.data;
-        const dataAccessToken = result.accessToken
-        const dataUserId = dataAccessToken.userId
-        localStorage.setItem("userId", JSON.stringify(dataUserId))
-        localStorage.setItem("user", JSON.stringify(result));
-        navigate("/Post"); 
+          alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres, aucun champs ne doit être vide.");
+        } else if (response.status === 200){
+          const result = response.data;
+          const dataAccessToken = result.accessToken
+          const dataUserId = dataAccessToken.userId
+          localStorage.setItem("userId", JSON.stringify(dataUserId))
+          localStorage.setItem("user", JSON.stringify(result));
+          navigate("/Post"); 
+        }
       }).catch((error) => {
         console.log(error);
       })
