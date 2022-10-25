@@ -31,8 +31,8 @@ const BlocInput = () => {
         const dataPost = JSON.stringify(combined)
 
         const formData = await new FormData();
-        await formData.append("post", dataPost);
-        await formData.append("image", file);
+        formData.append("post", dataPost);
+        formData.append("image", file);
         
         await axios.post(`/posts`, formData, {
             headers: {
