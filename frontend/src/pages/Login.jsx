@@ -11,6 +11,11 @@ export default function Login() {
   const  [password, setPassword]  = useState("");
   const navigate = useNavigate();
   
+  /*
+   * Objectif => Si le local storage contient déjà la clé user on navige directement vers 
+   * - la page post sinon on clear le localStorage.
+   */
+
   useEffect(() => {
     if (localStorage.getItem("error")) {
       localStorage.clear()
@@ -19,20 +24,32 @@ export default function Login() {
     }
   })
   
+  /*
+   * Objectif => au click récupération des données du body pour les envoyers au back pour vérifier s'il existe dans la BDD.
+   * Si les données existes => on récupe la réponse contenant le token et userId envoyé par le back.
+   * Si les données n'existes pas => la réponse et soit undefined pour une erreur de mot de passe soit une erreur pour l'email
+   * - on envoi une alerte a l'utilisateur pour l'alerter de l'erreur.
+   */
+
   async function handleClick() {
+    // on envoi les données de l'email et password
     await axios.post('/auth/login', {
       email, password
     }).then((response) => {
+      // on vérifie si la réponse et undefined
       if (response === undefined) {
+        // on alert si c'est le cas
         alert("Mot de passe incorect");
         localStorage.clear()
         return
-      } else if (response !== undefined){
+      } else {
         const result = response.data;
         const dataAccessToken = result.accessToken
         const dataUserId = dataAccessToken.userId
+        // envoi dans le local storage les données de la réponse
         localStorage.setItem("userId", JSON.stringify(dataUserId))
         localStorage.setItem("user", JSON.stringify(result));
+        // navigation vers la page /Post
         navigate("/Post"); 
       }
     }).catch((error) => {

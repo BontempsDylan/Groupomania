@@ -11,6 +11,10 @@ const BlocInput = () => {
     const dataStorageAccessToken = dataStorageUser.accessToken
     const token = dataStorageAccessToken.token
 
+    /*
+     * Objectif => récupération des données du user.
+    */
+
     useEffect(() => {
         axios.get(`/auth/users/${userId}`)
             .then(
@@ -20,7 +24,12 @@ const BlocInput = () => {
             )
     },[])
 
+    /*
+     * Objectif => au click on envoi les données en form-data pour créer le post.
+    */
+
     async function handleSubmitPosttRequest() {
+        
         const combined = {
             publication: publication,
             userId: userId,

@@ -12,6 +12,10 @@ const MenuModify = (props) => {
     const token = dataStorageAccessToken.token
     const id = post._id
 
+    /*
+     * Objectif => au click on envoi les données pour modifier le post.
+    */
+
     async function handleSubmitPutRequest() {
 
         const combined = {

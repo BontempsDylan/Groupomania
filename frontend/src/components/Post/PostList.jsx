@@ -21,6 +21,10 @@ function PostList() {
   
   const navigate = useNavigate();
 
+  /*
+   * Objectif => on envoi une request pour récupérer la valeur de admin.
+  */
+
   useEffect(() => {
     axios.get(`/auth/users/${userId}`)
         .then(
@@ -30,11 +34,12 @@ function PostList() {
         )   
   },[])
 
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
+  /*
+   * Objectif => on envoi une request pour récupérer les données Post de la BDD.
+  */
+
   useEffect(() => {
-    
+    // si il n'a pas accessToken on supprime la clé user du localStorage
     if(!accessToken) {
       localStorage.removeItem("user");
       navigate("/");
@@ -52,9 +57,6 @@ function PostList() {
           }).sort((post1, post2) => post2.date - post1.date);
           setPosts(sorted);
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           setIsLoaded(true);
           setError(error);

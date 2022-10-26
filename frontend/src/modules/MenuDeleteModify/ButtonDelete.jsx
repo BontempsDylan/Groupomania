@@ -9,6 +9,10 @@ const ButtonDelete = (props) => {
     const token = dataStorageAccessToken.token
     const postId = post._id
 
+    /*
+     * Objectif => au click on supprime le post.
+    */
+
     async function handleSubmitDelRequest() {
         await axios.delete(`/posts/${postId}`)
           .then(data => console.log(data))

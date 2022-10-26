@@ -12,31 +12,46 @@ export default function Signup() {
   const [email, setEmail]  = useState("");
   const [password, setPassword]  = useState("");
   const navigate = useNavigate()
+
+  /*
+   * Objectif => Si le local storage contient déjà la clé user on navige directement vers 
+   * - la page post.
+   */
   
   useEffect(() => {
     if (localStorage.getItem("user")) {
       navigate("/Post")
     }
   })
+
+   /*
+   * Objectif => au click récupération des données du body pour les envoyers au back pour vérifier s'il existe dans la BDD.
+   * Si les données existes => on récupe la réponse contenant le token et userId envoyé par le back.
+   * Si les données n'existes pas => on vérifie si la réponse est undefined, si c'est le cas on alert l'utilisateur.
+   */
   
   async function handleClick() {
-      await axios.post('/auth/Signup', {
-        nom, prenom, email, password
-      }).then((response) => {
-        if (response === undefined) {
-          alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres, aucun champs ne doit être vide.");
-        } else if (response.status === 200){
-          const result = response.data;
-          const dataAccessToken = result.accessToken
-          const dataUserId = dataAccessToken.userId
-          localStorage.setItem("userId", JSON.stringify(dataUserId))
-          localStorage.setItem("user", JSON.stringify(result));
-          navigate("/Post"); 
-        }
-      }).catch((error) => {
-        console.log(error);
-      })
-    }
+    // on envoi les données de l'email, password, nom et prénom
+    await axios.post('/auth/Signup', {
+      nom, prenom, email, password
+    }).then((response) => {
+      // on vérifie si la réponse et undefined
+      if (response === undefined) {
+        alert("L'un des champs et mal remplis. Le mot de passe doit contenir de 5 à 20 caractères, au moins un symbole parmi !@#%^&*_+\-:?~ et au moins 2 chiffres, aucun champs ne doit être vide.");
+      } else if (response.status === 200){
+        const result = response.data;
+        const dataAccessToken = result.accessToken
+        const dataUserId = dataAccessToken.userId
+        // envoi dans le local storage les données de la réponse
+        localStorage.setItem("userId", JSON.stringify(dataUserId))
+        localStorage.setItem("user", JSON.stringify(result));
+        // navigation vers la page /Post
+        navigate("/Post"); 
+      }
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
     return (
       <div className='page--formualaire'>
