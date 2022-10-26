@@ -133,7 +133,7 @@ exports.userRefreshToken = (req, res) => {
                 token: jwt.sign(
                     { userId: user.userId, isAdmin: user.isAdmin},
                     process.env.SECRET_TOKEN,
-                    { expiresIn: '20s'}
+                    { expiresIn: '1800s'}
                 )
             },
             refreshToken: {
