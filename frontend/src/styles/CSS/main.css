@@ -410,6 +410,7 @@ html {
   width: 100%;
   background: var(--colour-tertiairer);
   border-radius: 20px;
+  cursor: pointer;
 }
 .blocPostList .navBar-addPost .navBar-nav-addPost .navItem-addPost__center__liner__form__texte {
   padding-left: 15px;
@@ -523,6 +524,7 @@ html {
   color: var(--colour-primary);
   font-size: 18px;
   font-weight: 700;
+  cursor: pointer;
 }
 .blocPostList .navBar-addPost .navBar-nav-addPost .navItem-addPost__placement {
   display: flex;
@@ -535,15 +537,20 @@ html {
   display: flex;
   align-items: center;
 }
+.blocPostList .navBar-addPost .navBar-nav-addPost .navItem-addPost__placement .navItem-addPost-btn__bloc__icone {
+  cursor: pointer;
+}
 .blocPostList .navBar-addPost .navBar-nav-addPost .navItem-addPost__placement .navItem-addPost-btn__bloc__icone .fa-images {
   margin-right: 5px;
   color: var(--colour-texte);
   font-size: 40px;
+  cursor: pointer;
 }
 .blocPostList .navBar-addPost .navBar-nav-addPost .navItem-addPost__placement .navItem-addPost-btn__bloc .navItem-addPost-texte__photo {
   color: var(--colour-texte);
   font-size: 18px;
   font-weight: 900;
+  cursor: pointer;
 }
 .blocPostList .vitrine {
   display: flex;

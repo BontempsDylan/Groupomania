@@ -100,6 +100,7 @@ html {
                             width: 100%;
                             background: var(--colour-tertiairer);
                             border-radius: 20px;
+                            cursor: pointer;
                             &__texte {
                                 padding-left: 15px;
                                 color: var(--colour-texte-input);
@@ -211,7 +212,7 @@ html {
                                     color: var(--colour-primary);
                                     font-size: 18px;
                                     font-weight: 700;
-                                    
+                                    cursor: pointer;
                                 }
                             }
                         }
@@ -228,10 +229,12 @@ html {
                             display: flex;
                             align-items: center;
                             &__icone {
+                                cursor: pointer;
                                 .fa-images {
                                     margin-right: 5px;
                                     color: var(--colour-texte);
                                     font-size: 40px;
+                                    cursor: pointer;
                                 }
                             }
                             .navItem-addPost-texte {
@@ -239,6 +242,7 @@ html {
                                     color: var(--colour-texte);
                                     font-size: 18px;
                                     font-weight: 900;
+                                    cursor: pointer;
                                 }
                             }
                             

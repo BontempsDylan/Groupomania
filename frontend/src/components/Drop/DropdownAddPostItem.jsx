@@ -11,7 +11,7 @@ const DropdownAddPostItem = (props) => {
     function DropdownItemAddPost(props) {
         return (
         <button className="menu-item" onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
-            <span className="icon-button">{props.leftIcon}</span>
+            <span onClick={handleClose} className="icon-button">{props.leftIcon}</span>
             {props.children}
             <span className="icon-right">{props.rightIcon}</span>
         </button>
@@ -26,7 +26,7 @@ const DropdownAddPostItem = (props) => {
             unmountOnExit>
             <div className='menuAddPost'>
                 <DropdownItemAddPost leftIcon={<Retour />}>
-                    <h2 onClick={handleClose} >Retour</h2>
+                    <h2 style={{cursor: 'pointer'}} onClick={handleClose} >Retour</h2>
                 </DropdownItemAddPost>
                 <BlocInput />
             </div> 

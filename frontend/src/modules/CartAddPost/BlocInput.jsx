@@ -64,7 +64,7 @@ const BlocInput = () => {
 
   return (
     <div className='bloc-input'>
-        <textarea type="text" className='input-post' placeholder="Exprimez-vous..." style={{height: 120}} value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
+        <textarea type="text" className='input-post' placeholder="Exprimez-vous..." style={{height: 120, resize: 'none'}} value={publication} onChange={(e) => setPublication(e.target.value)}></textarea>
         <div className='conteneur-input'>
             <label for="input-file"><i className="fas fa-images" /></label>
             <input type="file" accept="image/*" className='input-file' id='input-file' onChange={(e) => {
